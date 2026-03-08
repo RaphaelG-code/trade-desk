@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade Desk — Commerce International</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0a0a0f; color: #e8e4dc; font-family: 'DM Mono', monospace; font-size: 13px; }
+
+  .topbar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 24px; background: #10101a;
+    border-bottom: 1px solid #1e1e2e;
+    position: sticky; top: 0; z-index: 100; flex-wrap: wrap;
+  }
+  .topbar-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 800; color: #f5f0e8; margin-right: 6px; }
+  .lot-pill {
+    padding: 5px 14px; border-radius: 20px; border: 1px solid #2a2a3e;
+    background: transparent; color: #888; font-family: 'DM Mono', monospace;
+    font-size: 11px; cursor: pointer; transition: all 0.15s; white-space: nowrap;
+  }
+  .lot-pill:hover { border-color: #e8642a; color: #e8642a; }
+  .lot-pill.active { background: #e8642a; border-color: #e8642a; color: #0a0a0f; font-weight: 500; }
+  .add-lot-btn {
+    padding: 5px 12px; border-radius: 20px; border: 1px dashed #3a3a4e;
+    background: transparent; color: #555; font-family: 'DM Mono', monospace;
+    font-size: 11px; cursor: pointer; transition: all 0.15s;
+  }
+  .add-lot-btn:hover { border-color: #e8642a; color: #e8642a; }
+
+  .tab-bar { display: flex; padding: 0 24px; background: #10101a; border-bottom: 1px solid #1e1e2e; }
+  .tab {
+    padding: 10px 20px; font-family: 'DM Mono', monospace; font-size: 11px;
+    color: #555; cursor: pointer; border-bottom: 2px solid transparent;
+    transition: all 0.15s; background: none; border-top: none; border-left: none; border-right: none;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .tab:hover { color: #e8642a; }
+  .tab.active { color: #e8642a; border-bottom-color: #e8642a; }
+
+  .main { padding: 24px; max-width: 1200px; margin: 0 auto; }
+
+  .rates-bar { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+  .rate-card {
+    display: flex; align-items: center; gap: 10px; background: #12121c;
+    border: 1px solid #1e1e2e; border-radius: 8px; padding: 10px 16px;
+    flex: 1; min-width: 180px;
+  }
+  .rate-label { font-size: 10px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+  .rate-input {
+    background: transparent; border: none; border-bottom: 1px solid #2a2a3e;
+    color: #e8642a; font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500;
+    width: 90px; outline: none; text-align: right; padding: 2px 4px;
+  }
+  .rate-input:focus { border-bottom-color: #e8642a; }
+
+  .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 16px; }
+  @media(max-width:768px) { .grid-4{grid-template-columns:1fr 1fr;} .grid-3{grid-template-columns:1fr;} }
+
+  .card { background: #12121c; border: 1px solid #1e1e2e; border-radius: 10px; padding: 18px 20px; }
+  .card.highlight { border-color: #e8642a33; background: linear-gradient(135deg,#1a100a,#12121c); }
+  .card.green { border-color: #22c55e33; background: linear-gradient(135deg,#0a1a0e,#12121c); }
+  .card.yellow { border-color: #eab30833; background: linear-gradient(135deg,#1a150a,#12121c); }
+  .card.red { border-color: #ef444433; background: linear-gradient(135deg,#1a0a0a,#12121c); }
+  .card-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: #444; margin-bottom: 6px; }
+  .card-value { font-size: 22px; font-weight: 500; color: #f0ece4; line-height: 1.2; }
+  .card-value.orange { color: #e8642a; }
+  .card-value.green { color: #22c55e; }
+  .card-value.yellow { color: #eab308; }
+  .card-value.red { color: #ef4444; }
+  .card-sub { font-size: 10px; color: #555; margin-top: 4px; }
+
+  .section-title { font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:#444; margin-bottom:12px; margin-top:8px; }
+
+  .negobar {
+    display:flex; align-items:center; gap:16px; background:#12121c;
+    border:1px solid #1e1e2e; border-radius:10px; padding:16px 20px;
+    margin-bottom:16px; flex-wrap:wrap;
+  }
+  .negobar-label { font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:#555; white-space:nowrap; }
+  .nego-input {
+    background:#0a0a0f; border:1px solid #2a2a3e; border-radius:6px;
+    color:#f5f0e8; font-family:'DM Mono',monospace; font-size:16px;
+    padding:6px 12px; width:160px; outline:none;
+  }
+  .nego-input:focus { border-color:#e8642a; }
+
+  .profit-bar { background:#12121c; border:1px solid #1e1e2e; border-radius:10px; padding:20px; margin-bottom:16px; }
+  .profit-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #1a1a2a; }
+  .profit-row:last-child { border-bottom:none; }
+  .profit-row.total { padding-top:14px; margin-top:6px; border-top:1px solid #2a2a3e; border-bottom:none; }
+  .profit-label { color:#666; }
+  .profit-val { font-size:14px; font-weight:500; }
+  .profit-val.pos { color:#22c55e; }
+  .profit-val.neg { color:#ef4444; }
+  .profit-val.neutral { color:#e8e4dc; }
+  .profit-val.big { font-size:20px; }
+
+  .params-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px; }
+  @media(max-width:768px){.params-grid{grid-template-columns:1fr 1fr;}}
+  .param-card { background:#12121c; border:1px solid #1e1e2e; border-radius:8px; padding:12px 14px; }
+  .param-label { font-size:9px; text-transform:uppercase; letter-spacing:.1em; color:#444; margin-bottom:6px; }
+  .param-input {
+    background:transparent; border:none; border-bottom:1px solid #2a2a3e;
+    color:#a0c4ff; font-family:'DM Mono',monospace; font-size:14px;
+    width:100%; outline:none; padding:2px 0;
+  }
+  .param-input:focus { border-bottom-color:#a0c4ff; }
+
+  .table-wrap { background:#12121c; border:1px solid #1e1e2e; border-radius:10px; overflow:auto; }
+  .lot-table { width:100%; border-collapse:collapse; }
+  .lot-table th { text-align:left; font-size:9px; letter-spacing:.12em; text-transform:uppercase; color:#444; padding:10px 12px; border-bottom:1px solid #1e1e2e; }
+  .lot-table td { padding:8px 12px; border-bottom:1px solid #141420; vertical-align:middle; }
+  .lot-table tr:hover td { background:#14141e; }
+  .model-name { color:#c8c0b4; font-size:12px; }
+  .vmr-val { color:#555; font-size:11px; }
+  .total-val { color:#e8642a; font-size:12px; font-weight:500; }
+
+  .tbl-input {
+    background:#0e0e18; border:1px solid #2a2a3e; border-radius:4px;
+    color:#a0c4ff; font-family:'DM Mono',monospace; font-size:12px;
+    padding:4px 8px; width:80px; outline:none;
+  }
+  .tbl-input:focus { border-color:#a0c4ff; }
+  .tbl-input::placeholder { color:#333; }
+
+  .del-btn { background:none; border:none; color:#333; cursor:pointer; font-size:14px; padding:0 4px; transition:color .15s; }
+  .del-btn:hover { color:#ef4444; }
+
+  .add-row { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; align-items:center; }
+  .add-select {
+    background:#12121c; border:1px solid #2a2a3e; border-radius:6px;
+    color:#c8c0b4; font-family:'DM Mono',monospace; font-size:12px;
+    padding:7px 10px; outline:none; flex:1; min-width:200px;
+  }
+  .add-input {
+    background:#12121c; border:1px solid #2a2a3e; border-radius:6px;
+    color:#c8c0b4; font-family:'DM Mono',monospace; font-size:12px;
+    padding:7px 10px; width:80px; outline:none;
+  }
+  .add-btn {
+    background:#e8642a; border:none; border-radius:6px; color:#0a0a0f;
+    font-family:'DM Mono',monospace; font-size:12px; font-weight:500;
+    padding:7px 16px; cursor:pointer; transition:opacity .15s;
+  }
+  .add-btn:hover { opacity:.85; }
+
+  .badge { display:inline-block; padding:3px 10px; border-radius:10px; font-size:9px; letter-spacing:.08em; text-transform:uppercase; font-weight:500; }
+  .badge.ok { background:#22c55e22; color:#22c55e; }
+  .badge.warn { background:#eab30822; color:#eab308; }
+  .badge.danger { background:#ef444422; color:#ef4444; }
+
+  .lot-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:8px; }
+  .lot-id { font-size:10px; color:#444; }
+  .lot-name { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:#c8c0b4; }
+  .lot-stats { display:flex; gap:16px; flex-wrap:wrap; }
+  .lot-stat { font-size:10px; color:#666; }
+  .lot-stat span { color:#e8642a; }
+  .divider { height:1px; background:#1a1a2a; margin:20px 0; }
+
+  .new-lot-row { display:flex; gap:6px; align-items:center; }
+  .new-lot-input {
+    background:#0a0a0f; border:1px solid #2a2a3e; border-radius:20px;
+    color:#e8e4dc; font-family:'DM Mono',monospace; font-size:11px;
+    padding:5px 14px; outline:none; width:160px;
+  }
+  .new-lot-input:focus { border-color:#e8642a; }
+  .confirm-btn { background:#e8642a; border:none; border-radius:20px; color:#0a0a0f; font-family:'DM Mono',monospace; font-size:11px; font-weight:500; padding:5px 14px; cursor:pointer; }
+  .cancel-btn { background:none; border:none; color:#555; font-family:'DM Mono',monospace; font-size:11px; cursor:pointer; padding:5px 8px; }
+
+  .lot-info-banner {
+    background:#12121c; border:1px solid #1e1e2e; border-radius:8px;
+    padding:12px 16px; margin-bottom:16px; display:flex; gap:16px; flex-wrap:wrap; align-items:center;
+  }
+  .lot-info-item { font-size:10px; color:#555; }
+  .lot-info-item span { color:#e8642a; margin-left:4px; }
+</style>
+</head>
+<body>
+
+<div id="topbar" class="topbar">
+  <div class="topbar-title">TRADE DESK</div>
+  <div id="lot-pills"></div>
+  <div id="new-lot-area"></div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab active" onclick="setTab('dashboard')">Dashboard</button>
+  <button class="tab" onclick="setTab('lot')">Détail du lot</button>
+  <button class="tab" onclick="setTab('params')">Paramètres</button>
+</div>
+
+<div class="main" id="main-content"></div>
+
+<script>
+// ── REFERENTIEL ──────────────────────────────────────────────────────────────
+const REF = [
+  {m:"iPhone 16 Pro Max 256GB",      fr:1250, dxb:1200},
+  {m:"iPhone 16 Pro Max 512GB",      fr:1380, dxb:1320},
+  {m:"iPhone 16 Pro 512GB",          fr:1120, dxb:1100},
+  {m:"iPhone 16 Pro 256GB",          fr:1050, dxb:1020},
+  {m:"iPhone 16 256GB",              fr:880,  dxb:850},
+  {m:"iPhone 16 128GB",              fr:790,  dxb:750},
+  {m:"iPhone 15 256GB",              fr:650,  dxb:630},
+  {m:"iPhone 15 128GB",              fr:580,  dxb:560},
+  {m:"iPhone 14 128GB",              fr:440,  dxb:420},
+  {m:"iPad Pro 11 4th Gen WIFI 128GB", fr:550, dxb:530},
+  {m:"Samsung Galaxy S25 Ultra 256GB", fr:1250, dxb:1200},
+  {m:"Samsung Galaxy S25 256GB",     fr:950,  dxb:920},
+  {m:"Samsung Galaxy S24 Plus 256GB",fr:680,  dxb:650},
+  {m:"Samsung Galaxy S24 256GB",     fr:590,  dxb:570},
+  {m:"Samsung Galaxy S24 128GB",     fr:540,  dxb:520},
+  {m:"Samsung Galaxy A06 64GB",      fr:110,  dxb:105},
+  {m:"Samsung Galaxy A05 64GB",      fr:95,   dxb:90},
+  {m:"AirTag - 4 Pack",              fr:85,   dxb:80},
+  {m:"Samsung SmartTag2 - 4 Pack",   fr:70,   dxb:65},
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let state = {
+  rateEurIls: 3.68154,
+  rateUsdIls: 3.12132,
+  exitCoeff: 0.80,
+  idealCoeff: 0.60,
+  shipping: 4000,
+  targetMargin: 0.15,
+  activeLot: 0,
+  activeTab: 'dashboard',
+  addingLot: false,
+  negotiatedPrices: [79807],
+  lots: [
+    {
+      id: "LOT-2026-001",
+      name: "Partner Israel — Mix Apple/Samsung",
+      items: [
+        {m:"AirTag - 4 Pack", qty:15, offer:""},
+        {m:"Samsung Galaxy A06 64GB", qty:13, offer:""},
+        {m:"iPhone 14 128GB", qty:12, offer:""},
+        {m:"iPhone 15 128GB", qty:10, offer:""},
+        {m:"Samsung SmartTag2 - 4 Pack", qty:10, offer:""},
+        {m:"Samsung Galaxy S24 Plus 256GB", qty:10, offer:""},
+        {m:"Samsung Galaxy S24 128GB", qty:5, offer:""},
+        {m:"Samsung Galaxy S24 256GB", qty:3, offer:""},
+        {m:"Samsung Galaxy S25 256GB", qty:3, offer:""},
+        {m:"iPhone 16 128GB", qty:7, offer:""},
+        {m:"iPhone 16 256GB", qty:2, offer:""},
+        {m:"iPhone 16 Pro 256GB", qty:4, offer:""},
+        {m:"iPhone 16 Pro 512GB", qty:2, offer:""},
+        {m:"iPhone 16 Pro Max 256GB", qty:4, offer:""},
+        {m:"Samsung Galaxy S25 Ultra 256GB", qty:2, offer:""},
+        {m:"Samsung Galaxy A05 64GB", qty:2, offer:""},
+        {m:"iPhone 15 256GB", qty:2, offer:""},
+        {m:"iPad Pro 11 4th Gen WIFI 128GB", qty:2, offer:""},
+      ]
+    }
+  ]
+};
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+const fmt = (n, d=0) => isNaN(n)||n==null ? '—' : new Intl.NumberFormat('fr-FR',{maximumFractionDigits:d}).format(n);
+const fmtPct = n => isNaN(n)||n==null ? '—' : (n*100).toFixed(1)+'%';
+const getRef = m => REF.find(r=>r.m===m) || {fr:0,dxb:0};
+
+function calcLot(lot, negotiated) {
+  const items = lot.items.map(item => {
+    const ref = getRef(item.m);
+    const mp = parseFloat(item.offer)||0;
+    const totalFr = item.qty * (mp>0 ? mp : ref.fr);
+    const totalDxb = item.qty * (mp>0 ? mp : ref.dxb);
+    return {...item, ref, totalFr, totalDxb};
+  });
+  const totalVmrFr  = items.reduce((s,i)=>s+i.totalFr, 0);
+  const totalVmrDxb = items.reduce((s,i)=>s+i.totalDxb, 0);
+  const valIlsFr  = totalVmrFr  * state.rateEurIls;
+  const valIlsDxb = totalVmrDxb * state.rateUsdIls;
+  const bestValIls = Math.max(valIlsFr, valIlsDxb);
+  const bestExit   = valIlsFr >= valIlsDxb ? '🇫🇷 France / Europe' : '🇦🇪 Dubaï';
+  const estimatedResale = bestValIls * state.exitCoeff;
+  const targetProfitIls = estimatedResale * state.targetMargin;
+  const maxBuy  = estimatedResale - state.shipping - targetProfitIls;
+  const idealBuy = bestValIls * state.idealCoeff - state.shipping - targetProfitIls;
+  const neg = negotiated || 0;
+  const currentProfit = estimatedResale - state.shipping - neg;
+  const currentMarginPct = estimatedResale > 0 ? currentProfit / estimatedResale : 0;
+  const totalQty = lot.items.reduce((s,i)=>s+(parseInt(i.qty)||0),0);
+  return {items, totalVmrFr, totalVmrDxb, valIlsFr, valIlsDxb, bestValIls, bestExit, estimatedResale, targetProfitIls, maxBuy, idealBuy, currentProfit, currentMarginPct, totalQty};
+}
+
+function setTab(t) {
+  state.activeTab = t;
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase().includes(t==='lot'?'détail':t==='params'?'param':t)));
+  render();
+}
+
+function render() {
+  renderTopbar();
+  renderMain();
+}
+
+// ── TOPBAR ────────────────────────────────────────────────────────────────────
+function renderTopbar() {
+  const pillsEl = document.getElementById('lot-pills');
+  pillsEl.innerHTML = state.lots.map((lot,i) =>
+    `<button class="lot-pill${i===state.activeLot?' active':''}" onclick="switchLot(${i})">${lot.id}</button>`
+  ).join('');
+
+  const newLotEl = document.getElementById('new-lot-area');
+  if (state.addingLot) {
+    newLotEl.innerHTML = `
+      <div class="new-lot-row">
+        <input class="new-lot-input" id="new-lot-input" placeholder="Nom du lot..." onkeydown="if(event.key==='Enter')confirmNewLot()">
+        <button class="confirm-btn" onclick="confirmNewLot()">OK</button>
+        <button class="cancel-btn" onclick="cancelNewLot()">✕</button>
+      </div>`;
+    setTimeout(()=>document.getElementById('new-lot-input')?.focus(),50);
+  } else {
+    newLotEl.innerHTML = `<button class="add-lot-btn" onclick="startNewLot()">+ Nouveau lot</button>`;
+  }
+}
+
+function switchLot(i) {
+  state.activeLot = i;
+  state.activeTab = 'dashboard';
+  document.querySelectorAll('.tab').forEach((b,idx)=>b.classList.toggle('active',idx===0));
+  render();
+}
+function startNewLot() { state.addingLot=true; renderTopbar(); setTimeout(()=>document.getElementById('new-lot-input')?.focus(),50); }
+function cancelNewLot() { state.addingLot=false; renderTopbar(); }
+function confirmNewLot() {
+  const val = document.getElementById('new-lot-input')?.value?.trim();
+  if (!val) return;
+  const n = state.lots.length+1;
+  state.lots.push({id:`LOT-2026-00${n}`, name:val, items:[]});
+  state.negotiatedPrices.push(0);
+  state.activeLot = state.lots.length-1;
+  state.addingLot = false;
+  state.activeTab = 'lot';
+  document.querySelectorAll('.tab').forEach((b,idx)=>b.classList.toggle('active',idx===1));
+  render();
+}
+
+// ── MAIN ──────────────────────────────────────────────────────────────────────
+function renderMain() {
+  const lot = state.lots[state.activeLot];
+  const neg = state.negotiatedPrices[state.activeLot]||0;
+  const c   = calcLot(lot, neg);
+  const el  = document.getElementById('main-content');
+
+  const ratesHtml = `
+    <div class="rates-bar">
+      <div class="rate-card">
+        <div class="rate-label">EUR / ILS</div>
+        <input class="rate-input" type="number" step="0.0001" value="${state.rateEurIls}"
+          oninput="state.rateEurIls=parseFloat(this.value)||0;renderMain()">
+      </div>
+      <div class="rate-card">
+        <div class="rate-label">USD / ILS</div>
+        <input class="rate-input" type="number" step="0.0001" value="${state.rateUsdIls}"
+          oninput="state.rateUsdIls=parseFloat(this.value)||0;renderMain()">
+      </div>
+      <div class="rate-card" style="flex:2;background:transparent;border:1px dashed #1a1a2a">
+        <div class="rate-label" style="color:#333">Lot actif</div>
+        <div style="color:#e8642a;font-size:13px;font-weight:500">${lot.name}</div>
+        <div style="margin-left:auto;color:#444;font-size:10px">${c.totalQty} unités · ${lot.items.length} réf.</div>
+      </div>
+    </div>`;
+
+  if (state.activeTab === 'dashboard') {
+    const marginBadge = c.currentMarginPct>=state.targetMargin?'ok':c.currentMarginPct>=0?'warn':'danger';
+    const profitCls   = c.currentMarginPct>=state.targetMargin?'pos':c.currentMarginPct>=0?'neutral':'neg';
+    el.innerHTML = ratesHtml + `
+      <div class="section-title">Valeur de marché</div>
+      <div class="grid-4">
+        <div class="card ${c.valIlsFr>=c.valIlsDxb?'highlight':''}">
+          <div class="card-label">VMR France (EUR)</div>
+          <div class="card-value orange">${fmt(c.totalVmrFr)} €</div>
+          <div class="card-sub">${fmt(c.valIlsFr)} ILS</div>
+        </div>
+        <div class="card ${c.valIlsDxb>c.valIlsFr?'highlight':''}">
+          <div class="card-label">VMR Dubaï (USD)</div>
+          <div class="card-value orange">${fmt(c.totalVmrDxb)} $</div>
+          <div class="card-sub">${fmt(c.valIlsDxb)} ILS</div>
+        </div>
+        <div class="card yellow">
+          <div class="card-label">Meilleur exit</div>
+          <div class="card-value yellow" style="font-size:14px">${c.bestExit}</div>
+          <div class="card-sub">${fmt(c.bestValIls)} ILS</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Estimated Resale ×${state.exitCoeff}</div>
+          <div class="card-value">${fmt(c.estimatedResale)} ILS</div>
+          <div class="card-sub">≈ ${fmt(c.estimatedResale/state.rateEurIls)} €</div>
+        </div>
+      </div>
+
+      <div class="section-title">Seuils d'achat</div>
+      <div class="grid-3">
+        <div class="card red">
+          <div class="card-label">🔴 Max Buy Price (plafond)</div>
+          <div class="card-value red">${fmt(c.maxBuy)} ILS</div>
+          <div class="card-sub">≈ ${fmt(c.maxBuy/state.rateEurIls)} €</div>
+        </div>
+        <div class="card yellow">
+          <div class="card-label">🟡 Ideal Buy Price (ancre)</div>
+          <div class="card-value yellow">${fmt(c.idealBuy)} ILS</div>
+          <div class="card-sub">≈ ${fmt(c.idealBuy/state.rateEurIls)} €</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Objectif marge nette</div>
+          <div class="card-value">${fmtPct(state.targetMargin)}</div>
+          <div class="card-sub">= ${fmt(c.targetProfitIls)} ILS requis</div>
+        </div>
+      </div>
+
+      <div class="section-title">Négociation en cours</div>
+      <div class="negobar">
+        <div class="negobar-label">Prix négocié (ILS)</div>
+        <input class="nego-input" type="number" value="${neg}"
+          oninput="state.negotiatedPrices[state.activeLot]=parseFloat(this.value)||0;renderMain()">
+        <div style="color:#555;font-size:11px">≈ ${fmt(neg/state.rateEurIls)} €</div>
+        <div style="margin-left:auto"><span class="badge ${marginBadge}">Marge ${fmtPct(c.currentMarginPct)}</span></div>
+      </div>
+
+      <div class="profit-bar">
+        <div class="profit-row">
+          <div class="profit-label">Estimated Resale</div>
+          <div class="profit-val neutral">${fmt(c.estimatedResale)} ILS</div>
+        </div>
+        <div class="profit-row">
+          <div class="profit-label">− Shipping & Insurance</div>
+          <div class="profit-val neg">-${fmt(state.shipping)} ILS</div>
+        </div>
+        <div class="profit-row">
+          <div class="profit-label">− Prix d'achat négocié</div>
+          <div class="profit-val neg">-${fmt(neg)} ILS</div>
+        </div>
+        <div class="profit-row total">
+          <div style="color:#e8e4dc;font-weight:500">= Profit Net</div>
+          <div>
+            <div class="profit-val big ${profitCls}">${fmt(c.currentProfit)} ILS</div>
+            <div style="font-size:11px;color:#555;text-align:right">≈ ${fmt(c.currentProfit/state.rateEurIls)} €</div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  else if (state.activeTab === 'lot') {
+    const rows = c.items.map((item,i) => `
+      <tr>
+        <td class="model-name">${item.m}</td>
+        <td><input class="tbl-input" type="number" value="${item.qty}" style="width:60px"
+          oninput="updateItemQty(${i},this.value)"></td>
+        <td class="vmr-val">${item.ref.fr} €</td>
+        <td class="vmr-val">${item.ref.dxb} $</td>
+        <td><input class="tbl-input" type="number" placeholder="offre reçue" value="${item.offer}"
+          oninput="updateItemOffer(${i},this.value)"></td>
+        <td class="total-val">${fmt(item.totalFr)} €</td>
+        <td><button class="del-btn" onclick="removeItem(${i})">✕</button></td>
+      </tr>`).join('');
+
+    const refOptions = REF.map(r=>`<option value="${r.m}">${r.m} (${r.fr}€ / ${r.dxb}$)</option>`).join('');
+
+    el.innerHTML = ratesHtml + `
+      <div class="lot-header">
+        <div>
+          <div class="lot-id">${lot.id}</div>
+          <div class="lot-name">${lot.name}</div>
+        </div>
+        <div class="lot-stats">
+          <div class="lot-stat">Total unités <span>${c.totalQty}</span></div>
+          <div class="lot-stat">VMR FR <span>${fmt(c.totalVmrFr)} €</span></div>
+          <div class="lot-stat">VMR DXB <span>${fmt(c.totalVmrDxb)} $</span></div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="lot-table">
+          <thead><tr>
+            <th>Modèle</th><th>Qté</th><th>VMR FR (€/u)</th>
+            <th>VMR DXB ($/u)</th><th>Offre reçue (€)</th>
+            <th>Total FR (€)</th><th></th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <div class="add-row">
+        <select class="add-select" id="add-model">
+          <option value="">— Sélectionner un modèle —</option>
+          ${refOptions}
+        </select>
+        <input class="add-input" id="add-qty" type="number" placeholder="Qté">
+        <button class="add-btn" onclick="addItem()">+ Ajouter</button>
+      </div>`;
+  }
+
+  else if (state.activeTab === 'params') {
+    const refRows = REF.map(r=>`<tr><td class="model-name">${r.m}</td><td class="vmr-val">${r.fr} €</td><td class="vmr-val">${r.dxb} $</td></tr>`).join('');
+    el.innerHTML = ratesHtml + `
+      <div class="section-title">Stratégie & coûts</div>
+      <div class="params-grid">
+        <div class="param-card">
+          <div class="param-label">Exit Coeff (décote grossiste)</div>
+          <input class="param-input" type="number" step="0.05" value="${state.exitCoeff}"
+            oninput="state.exitCoeff=parseFloat(this.value)||0;renderMain()">
+        </div>
+        <div class="param-card">
+          <div class="param-label">Ideal Buy Coeff (ancre)</div>
+          <input class="param-input" type="number" step="0.05" value="${state.idealCoeff}"
+            oninput="state.idealCoeff=parseFloat(this.value)||0;renderMain()">
+        </div>
+        <div class="param-card">
+          <div class="param-label">Shipping & Insurance (ILS)</div>
+          <input class="param-input" type="number" step="100" value="${state.shipping}"
+            oninput="state.shipping=parseFloat(this.value)||0;renderMain()">
+        </div>
+        <div class="param-card">
+          <div class="param-label">Target Net Profit (%)</div>
+          <input class="param-input" type="number" step="0.01" value="${state.targetMargin}"
+            oninput="state.targetMargin=parseFloat(this.value)||0;renderMain()">
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="section-title">Référentiel de prix</div>
+      <div class="table-wrap">
+        <table class="lot-table">
+          <thead><tr><th>Modèle</th><th>VMR France (€)</th><th>VMR Dubaï ($)</th></tr></thead>
+          <tbody>${refRows}</tbody>
+        </table>
+      </div>`;
+  }
+}
+
+// ── ACTIONS ───────────────────────────────────────────────────────────────────
+function updateItemQty(i, v) {
+  state.lots[state.activeLot].items[i].qty = parseInt(v)||0;
+  renderMain();
+}
+function updateItemOffer(i, v) {
+  state.lots[state.activeLot].items[i].offer = v;
+  renderMain();
+}
+function removeItem(i) {
+  state.lots[state.activeLot].items.splice(i,1);
+  renderMain();
+}
+function addItem() {
+  const m = document.getElementById('add-model')?.value;
+  const q = parseInt(document.getElementById('add-qty')?.value)||0;
+  if (!m || !q) return;
+  state.lots[state.activeLot].items.push({m, qty:q, offer:''});
+  renderMain();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>

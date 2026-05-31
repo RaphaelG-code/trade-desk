@@ -720,6 +720,2386 @@ S.lots.forEach(l=>{
   if(!l.lotType)l.lotType='standard'; // migration : lots existants = standard
 });
 
+
+
+// Migration : injecter LOT-2026-002 si absent
+if(!S.lots.find(l=>l.id==='LOT-2026-002')){
+  S.lots.unshift({
+  "id": "LOT-2026-002",
+  "name": "Partner Israel — Écrans LCD/OLED 12 510 pcs",
+  "status": "💬 Pricing acheteurs",
+  "items": [
+    {
+      "m": "iPhone 14 Pro Max",
+      "qty": 3,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 14 Pro Max",
+      "qty": 468,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 15 Pro Max",
+      "qty": 355,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 12 Pro Max",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 12 Pro Max",
+      "qty": 205,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 15 Pro",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 15 Pro",
+      "qty": 165,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 12",
+      "qty": 135,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 15",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 15",
+      "qty": 127,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 16 Pro Max",
+      "qty": 114,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 14 Pro",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 14 Pro",
+      "qty": 100,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 14",
+      "qty": 100,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 11",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 11",
+      "qty": 94,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 14 Plus",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 14 Plus",
+      "qty": 88,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 15 Plus",
+      "qty": 62,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone XR",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone XR",
+      "qty": 60,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 16 Pro",
+      "qty": 59,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 11 Pro Max",
+      "qty": 39,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 13 Pro Max",
+      "qty": 35,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 13",
+      "qty": 30,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 16",
+      "qty": 18,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 11 Pro",
+      "qty": 15,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone XS Max",
+      "qty": 9,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 16 Plus",
+      "qty": 5,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 13 Pro",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 8 / SE 2020",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 12 Mini",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 13 Mini",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 12 Pro",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 8 Plus",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone X",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone XS",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S23 Ultra",
+      "qty": 5,
+      "grade": "B"
+    },
+    {
+      "m": "Galaxy S23 Ultra",
+      "qty": 1062,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S22 Ultra",
+      "qty": 3,
+      "grade": "B"
+    },
+    {
+      "m": "Galaxy S22 Ultra",
+      "qty": 556,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S24 Ultra",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "Galaxy S24 Ultra",
+      "qty": 323,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S10+",
+      "qty": 320,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S21 Ultra",
+      "qty": 195,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S20 Plus",
+      "qty": 179,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S22 Plus",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "Galaxy S22 Plus",
+      "qty": 151,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S20 Ultra",
+      "qty": 130,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S23",
+      "qty": 109,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S8+",
+      "qty": 90,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S10",
+      "qty": 1,
+      "grade": "A"
+    },
+    {
+      "m": "Galaxy S10",
+      "qty": 88,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S25 Ultra",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "Galaxy S25 Ultra",
+      "qty": 84,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S21",
+      "qty": 80,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S21 FE",
+      "qty": 79,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S20 FE",
+      "qty": 77,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S24",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "Galaxy S24",
+      "qty": 76,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S24 FE",
+      "qty": 65,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S23 Plus",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "Galaxy S23 Plus",
+      "qty": 48,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S21 Plus",
+      "qty": 45,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S23 FE",
+      "qty": 43,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S24 Plus",
+      "qty": 34,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S25",
+      "qty": 26,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S25 Plus",
+      "qty": 26,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S22",
+      "qty": 19,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S9",
+      "qty": 16,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S20",
+      "qty": 9,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S9+",
+      "qty": 9,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy S8",
+      "qty": 6,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Note 20 Ultra",
+      "qty": 340,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Note 10+",
+      "qty": 335,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Note 8",
+      "qty": 132,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Note 9",
+      "qty": 70,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Note 20",
+      "qty": 22,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Note 10",
+      "qty": 10,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Note 10 Lite",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Z Fold 4",
+      "qty": 271,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Z Fold 3",
+      "qty": 111,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Z Fold 5",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "Galaxy Z Fold 5",
+      "qty": 66,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Z Fold 6",
+      "qty": 47,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Z Fold 7",
+      "qty": 5,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Z Flip 5",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "Galaxy Z Flip 5",
+      "qty": 256,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Z Flip 6",
+      "qty": 124,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Z Flip 4",
+      "qty": 119,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Z Flip 3",
+      "qty": 30,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Z Flip 7",
+      "qty": 9,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Z Flip (1st Gen)",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A11",
+      "qty": 17,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A11",
+      "qty": 243,
+      "grade": "No Check"
+    },
+    {
+      "m": "Galaxy A30",
+      "qty": 258,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A73",
+      "qty": 1,
+      "grade": "A"
+    },
+    {
+      "m": "Galaxy A73",
+      "qty": 193,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A52",
+      "qty": 169,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A53",
+      "qty": 109,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A54",
+      "qty": 108,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A15",
+      "qty": 104,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A14",
+      "qty": 91,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A05",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "Galaxy A05",
+      "qty": 89,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A16",
+      "qty": 86,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A34",
+      "qty": 1,
+      "grade": "A"
+    },
+    {
+      "m": "Galaxy A34",
+      "qty": 85,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A12",
+      "qty": 84,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A55",
+      "qty": 83,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A72",
+      "qty": 81,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A10",
+      "qty": 72,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A70",
+      "qty": 69,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A06",
+      "qty": 63,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A13",
+      "qty": 63,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A52s",
+      "qty": 61,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A71",
+      "qty": 58,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A51",
+      "qty": 55,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A25",
+      "qty": 52,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A32",
+      "qty": 49,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A50",
+      "qty": 46,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A33",
+      "qty": 41,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A24",
+      "qty": 40,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A12s",
+      "qty": 39,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A04e",
+      "qty": 34,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A04 / A03s",
+      "qty": 31,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A56",
+      "qty": 30,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A23",
+      "qty": 27,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A35",
+      "qty": 23,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A36",
+      "qty": 17,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A30s",
+      "qty": 15,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A10s",
+      "qty": 13,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A8",
+      "qty": 10,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A26",
+      "qty": 10,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A03s",
+      "qty": 10,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A31",
+      "qty": 10,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A02s",
+      "qty": 5,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A17",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy A9 (2018)",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy M54",
+      "qty": 57,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy M55",
+      "qty": 37,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy M52",
+      "qty": 22,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy XCover 6 Pro",
+      "qty": 8,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy M34",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy J7 Pro",
+      "qty": 6,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy J8",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Tab A9",
+      "qty": 14,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Tab S7 FE (T875)",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Tab S6 Lite",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Tab A7",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Tab A (T515/T510)",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Galaxy Tab Active 5",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Pixel 8",
+      "qty": 25,
+      "grade": "C"
+    },
+    {
+      "m": "Pixel 8 Pro",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "Pixel 9",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "Pixel 9 Pro",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "Pixel 8a",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "Pixel 7 Pro",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "Pixel 7",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Pixel 7a",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Redmi Note 13",
+      "qty": 19,
+      "grade": "C"
+    },
+    {
+      "m": "Redmi Note 14",
+      "qty": 6,
+      "grade": "C"
+    },
+    {
+      "m": "Redmi 14C",
+      "qty": 5,
+      "grade": "C"
+    },
+    {
+      "m": "Redmi 12C",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "POCO X6 Pro",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "POCO X7 Pro",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "Xiaomi 14T Pro",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "Redmi Pad SE",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "Redmi Note 14 Pro 5G",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "Redmi Note 13 Pro",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "POCO X7",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Redmi Pad Pro 5G",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Xiaomi Qin 1S Plus (Kosher)",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "OPPO Reno7 5G",
+      "qty": 5,
+      "grade": "C"
+    },
+    {
+      "m": "OPPO A94 / Reno5 Z",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "OnePlus Nord CE 5G",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "OPPO Reno7 Z",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview Tab 60 Kids LTE",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "Blackview Tab 60 Kids LTE",
+      "qty": 64,
+      "grade": "C"
+    },
+    {
+      "m": "E Tera E980 (2.8\" TFT)",
+      "qty": 34,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview Tab 5 (Kids WiFi)",
+      "qty": 17,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview Tab 8 Active Pro",
+      "qty": 12,
+      "grade": "C"
+    },
+    {
+      "m": "RugGear RG725",
+      "qty": 9,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview Tab 7",
+      "qty": 8,
+      "grade": "C"
+    },
+    {
+      "m": "Telo TE580",
+      "qty": 7,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview Tab 60 WiFi",
+      "qty": 6,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview BV6600 Pro",
+      "qty": 6,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview Tab 7 Kids LTE",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "Easyphone NP-01 4G",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview BV5300 Pro",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview Tab 16",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview Tab 7/8 WiFi",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview Tab A5 Kids LTE",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "Phoneline F33/F34",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview BV9200",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "OSCAL Pad 5 Kids",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "Nokia 215 (Kosher)",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview A96",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview BV8800/BL8800 Pro",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview BL5000",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview BL9000 Pro",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview BV5200 Kids Pro",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview BV6300 Pro",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview Hero 10",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview Tab 11 SE",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview Tab 12/Pro",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Blackview Tab 15 Pro",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "OSCAL Pad 16 LTE",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Black Shark 8 256GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Mix iPhone (assorted)",
+      "qty": 196,
+      "grade": "C"
+    },
+    {
+      "m": "Mix iPhone (assorted)",
+      "qty": 90,
+      "grade": "No Check"
+    },
+    {
+      "m": "Apple 13 Pro Max,Lcd",
+      "qty": 4,
+      "grade": "B"
+    },
+    {
+      "m": "Apple 13 Pro Max,Lcd",
+      "qty": 226,
+      "grade": "C"
+    },
+    {
+      "m": "Apple 13,Lcd",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "Apple 13,Lcd",
+      "qty": 196,
+      "grade": "C"
+    },
+    {
+      "m": "Mix (assorted)",
+      "qty": 190,
+      "grade": "No Check"
+    },
+    {
+      "m": "Apple 13 Pro,Lcd",
+      "qty": 54,
+      "grade": "C"
+    },
+    {
+      "m": "Mix Old (assorted)",
+      "qty": 42,
+      "grade": "No Check"
+    },
+    {
+      "m": "Mix Samsung (assorted)",
+      "qty": 38,
+      "grade": "No Check"
+    },
+    {
+      "m": "GC Google 9 PRO XL 5G Screen",
+      "qty": 15,
+      "grade": "C"
+    },
+    {
+      "m": "Apple 13 Mini,Lcd",
+      "qty": 14,
+      "grade": "C"
+    },
+    {
+      "m": "GC Xiaomi Note 13 Pro PLUS 5G Display",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy Active Pro,SMT545,Svc Assy Smt-Lcd(E/ZK)",
+      "qty": 1,
+      "grade": "C"
+    }
+  ],
+  "buyPrice": 0,
+  "lotType": "screens",
+  "proposals": []
+});
+}
+
+// Migration : injecter LOT-2026-003 si absent
+if(!S.lots.find(l=>l.id==='LOT-2026-003')){
+  if(!S.buyers.find(b=>b.id==='atelva')){
+    S.buyers.push({id:'atelva',name:'Atelva',territory:'fr'});
+  }
+  S.lots.push({
+  "id": "LOT-2026-003",
+  "name": "Buyback Tender 964 pcs",
+  "status": "📩 Offre reçue",
+  "items": [
+    {
+      "m": "iPhone 16 Pro Max 256GB",
+      "qty": 62,
+      "grade": "A+"
+    },
+    {
+      "m": "iPhone 16 Pro Max 256GB",
+      "qty": 32,
+      "grade": "A"
+    },
+    {
+      "m": "iPhone 16 Pro Max 256GB",
+      "qty": 20,
+      "grade": "A'"
+    },
+    {
+      "m": "iPhone 16 Pro Max 256GB",
+      "qty": 42,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 16 Pro Max 256GB",
+      "qty": 14,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 16 Pro Max 256GB",
+      "qty": 1,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 16 Pro Max 256GB",
+      "qty": 2,
+      "grade": "Faulty"
+    },
+    {
+      "m": "Samsung Galaxy S22 5G 128GB",
+      "qty": 36,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S22 5G 128GB",
+      "qty": 60,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 15 Pro Max 256GB",
+      "qty": 35,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 15 Pro Max 256GB",
+      "qty": 29,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 15 Pro Max 256GB",
+      "qty": 2,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 15 Pro Max 256GB",
+      "qty": 6,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 15 Pro Max 256GB",
+      "qty": 5,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 14 Pro Max 256GB",
+      "qty": 13,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 14 Pro Max 256GB",
+      "qty": 12,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 14 Pro Max 256GB",
+      "qty": 4,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 14 Pro Max 256GB",
+      "qty": 14,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 14 Pro Max 256GB",
+      "qty": 7,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 16 Pro 256GB",
+      "qty": 10,
+      "grade": "A+"
+    },
+    {
+      "m": "iPhone 16 Pro 256GB",
+      "qty": 8,
+      "grade": "A"
+    },
+    {
+      "m": "iPhone 16 Pro 256GB",
+      "qty": 2,
+      "grade": "A'"
+    },
+    {
+      "m": "iPhone 16 Pro 256GB",
+      "qty": 7,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 16 Pro 256GB",
+      "qty": 3,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 16 Pro 256GB",
+      "qty": 1,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 16 Pro 256GB",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 13 128GB",
+      "qty": 10,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 13 128GB",
+      "qty": 6,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 13 128GB",
+      "qty": 3,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 13 128GB",
+      "qty": 11,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 13 Pro Max 256GB",
+      "qty": 7,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 13 Pro Max 256GB",
+      "qty": 10,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 13 Pro Max 256GB",
+      "qty": 3,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 13 Pro Max 256GB",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 13 Pro Max 256GB",
+      "qty": 2,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 14 128GB",
+      "qty": 11,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 14 128GB",
+      "qty": 5,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 14 128GB",
+      "qty": 3,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 14 128GB",
+      "qty": 5,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 14 128GB",
+      "qty": 1,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 14 Pro 256GB",
+      "qty": 8,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 14 Pro 256GB",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 14 Pro 256GB",
+      "qty": 5,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 14 Pro 256GB",
+      "qty": 5,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 14 Pro 256GB",
+      "qty": 2,
+      "grade": "Faulty"
+    },
+    {
+      "m": "Samsung Galaxy S23 Ultra 256GB",
+      "qty": 9,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S23 Ultra 256GB",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "Samsung Galaxy S23 Ultra 256GB",
+      "qty": 8,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 15 256GB",
+      "qty": 10,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 15 256GB",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 15 256GB",
+      "qty": 1,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 15 256GB",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 15 256GB",
+      "qty": 2,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 14 Pro 128GB",
+      "qty": 4,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 14 Pro 128GB",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 14 Pro 128GB",
+      "qty": 1,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 14 Pro 128GB",
+      "qty": 10,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 16 Pro 128GB",
+      "qty": 5,
+      "grade": "A+"
+    },
+    {
+      "m": "iPhone 16 Pro 128GB",
+      "qty": 1,
+      "grade": "A"
+    },
+    {
+      "m": "iPhone 16 Pro 128GB",
+      "qty": 5,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 16 Pro 128GB",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 16 Pro 128GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 16 Pro 128GB",
+      "qty": 1,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 13 256GB",
+      "qty": 4,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 13 256GB",
+      "qty": 3,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 13 256GB",
+      "qty": 2,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 13 256GB",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 13 256GB",
+      "qty": 1,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 14 Pro Max 128GB",
+      "qty": 3,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 14 Pro Max 128GB",
+      "qty": 4,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 14 Pro Max 128GB",
+      "qty": 3,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 14 Pro Max 128GB",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 14 Pro Max 128GB",
+      "qty": 1,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 16 128GB",
+      "qty": 2,
+      "grade": "A+"
+    },
+    {
+      "m": "iPhone 16 128GB",
+      "qty": 5,
+      "grade": "A'"
+    },
+    {
+      "m": "iPhone 16 128GB",
+      "qty": 2,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 16 128GB",
+      "qty": 4,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 16 128GB",
+      "qty": 1,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 16 Pro Max 512GB",
+      "qty": 5,
+      "grade": "A+"
+    },
+    {
+      "m": "iPhone 16 Pro Max 512GB",
+      "qty": 3,
+      "grade": "A"
+    },
+    {
+      "m": "iPhone 16 Pro Max 512GB",
+      "qty": 2,
+      "grade": "A'"
+    },
+    {
+      "m": "iPhone 16 Pro Max 512GB",
+      "qty": 2,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 16 Pro Max 512GB",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 12 Pro Max 256GB",
+      "qty": 3,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 12 Pro Max 256GB",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 12 Pro Max 256GB",
+      "qty": 2,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 12 Pro Max 256GB",
+      "qty": 5,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 12 Pro Max 256GB",
+      "qty": 2,
+      "grade": "Faulty"
+    },
+    {
+      "m": "Samsung Galaxy S24 Ultra 256GB",
+      "qty": 8,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S24 Ultra 256GB",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 11 128GB",
+      "qty": 4,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 11 128GB",
+      "qty": 3,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 11 128GB",
+      "qty": 1,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 11 128GB",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 11 128GB",
+      "qty": 2,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 12 128GB",
+      "qty": 7,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 12 128GB",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 12 128GB",
+      "qty": 1,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 12 128GB",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 12 Pro Max 128GB",
+      "qty": 4,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 12 Pro Max 128GB",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 12 Pro Max 128GB",
+      "qty": 2,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 12 Pro Max 128GB",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 13 Pro 256GB",
+      "qty": 2,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 13 Pro 256GB",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 13 Pro 256GB",
+      "qty": 3,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 13 Pro 256GB",
+      "qty": 4,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 13 Pro 256GB",
+      "qty": 1,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 14 Plus 128GB",
+      "qty": 4,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 14 Plus 128GB",
+      "qty": 3,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 14 Plus 128GB",
+      "qty": 1,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 14 Plus 128GB",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 15 Pro 256GB",
+      "qty": 3,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 15 Pro 256GB",
+      "qty": 5,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 15 Pro 256GB",
+      "qty": 1,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 15 Pro 256GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 15 Pro 256GB",
+      "qty": 1,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 12 Pro 256GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 12 Pro 256GB",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 12 Pro 256GB",
+      "qty": 1,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 12 Pro 256GB",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 12 Pro 256GB",
+      "qty": 3,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 13 Pro Max 128GB",
+      "qty": 2,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 13 Pro Max 128GB",
+      "qty": 4,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 13 Pro Max 128GB",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 13 Pro Max 128GB",
+      "qty": 1,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 15 128GB",
+      "qty": 5,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 15 128GB",
+      "qty": 2,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 15 128GB",
+      "qty": 2,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 16 Plus 256GB",
+      "qty": 2,
+      "grade": "A+"
+    },
+    {
+      "m": "iPhone 16 Plus 256GB",
+      "qty": 1,
+      "grade": "A"
+    },
+    {
+      "m": "iPhone 16 Plus 256GB",
+      "qty": 3,
+      "grade": "A'"
+    },
+    {
+      "m": "iPhone 16 Plus 256GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 16 Plus 256GB",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy S25 Ultra 512GB",
+      "qty": 7,
+      "grade": "A+"
+    },
+    {
+      "m": "Samsung Galaxy S25 Ultra 512GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 13 Pro 128GB",
+      "qty": 4,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 13 Pro 128GB",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 13 Pro 128GB",
+      "qty": 2,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 16 256GB",
+      "qty": 6,
+      "grade": "A'"
+    },
+    {
+      "m": "iPhone 16 256GB",
+      "qty": 2,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 14 256GB",
+      "qty": 3,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 14 256GB",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 14 256GB",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 14 Plus 256GB",
+      "qty": 4,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 14 Plus 256GB",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 14 Plus 256GB",
+      "qty": 1,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 15 Pro 128GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 15 Pro 128GB",
+      "qty": 3,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 15 Pro 128GB",
+      "qty": 3,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 15 Plus 128GB",
+      "qty": 6,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 15 Plus 256GB",
+      "qty": 2,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 15 Plus 256GB",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 15 Plus 256GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 16 Plus 128GB",
+      "qty": 1,
+      "grade": "A+"
+    },
+    {
+      "m": "iPhone 16 Plus 128GB",
+      "qty": 1,
+      "grade": "A'"
+    },
+    {
+      "m": "iPhone 16 Plus 128GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 16 Plus 128GB",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 16 Plus 128GB",
+      "qty": 1,
+      "grade": "C+"
+    },
+    {
+      "m": "Samsung Galaxy S23 Plus 256GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S23 Plus 256GB",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy S24 256GB",
+      "qty": 3,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S24 256GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 11 Pro 256GB",
+      "qty": 2,
+      "grade": "A"
+    },
+    {
+      "m": "iPhone 11 Pro 256GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 11 Pro 256GB",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 13 Mini 128GB",
+      "qty": 2,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 13 Mini 128GB",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 13 Mini 128GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 16 Pro 512GB",
+      "qty": 2,
+      "grade": "A+"
+    },
+    {
+      "m": "iPhone 16 Pro 512GB",
+      "qty": 1,
+      "grade": "A"
+    },
+    {
+      "m": "iPhone 16 Pro 512GB",
+      "qty": 1,
+      "grade": "A'"
+    },
+    {
+      "m": "Samsung Galaxy S21 Fe 5G",
+      "qty": 3,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy S22 Plus 5G 256GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S22 Plus 5G 256GB",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy S22 Ultra 5G 256GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S22 Ultra 5G 256GB",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy S23 Fe 256GB",
+      "qty": 3,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S25 Ultra 256GB",
+      "qty": 3,
+      "grade": "A+"
+    },
+    {
+      "m": "iPhone 12 256GB",
+      "qty": 2,
+      "grade": "A"
+    },
+    {
+      "m": "iPhone 12 256GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 12 64GB",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 12 64GB",
+      "qty": 2,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 12 Pro 128GB",
+      "qty": 1,
+      "grade": "A"
+    },
+    {
+      "m": "iPhone 12 Pro 128GB",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 13 Pro Max 512GB",
+      "qty": 1,
+      "grade": "A+"
+    },
+    {
+      "m": "iPhone 13 Pro Max 512GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 13 Pro Max 512GB",
+      "qty": 1,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 14 Pro 512GB",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 14 Pro 512GB",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 15 Pro Max 512GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 15 Pro Max 512GB",
+      "qty": 2,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 16 Pro Max 1TB",
+      "qty": 1,
+      "grade": "A+"
+    },
+    {
+      "m": "iPhone 16 Pro Max 1TB",
+      "qty": 1,
+      "grade": "A"
+    },
+    {
+      "m": "iPhone 16 Pro Max 1TB",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 16e 256GB",
+      "qty": 2,
+      "grade": "A+"
+    },
+    {
+      "m": "iPhone 16e 256GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy A35 5G 128GB",
+      "qty": 2,
+      "grade": "A"
+    },
+    {
+      "m": "Samsung Galaxy A55 256GB",
+      "qty": 1,
+      "grade": "A"
+    },
+    {
+      "m": "Samsung Galaxy A55 256GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S21 5G 128GB",
+      "qty": 2,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy S22 Plus 256GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S22 Plus 256GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy S23 Ultra 512GB",
+      "qty": 2,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S24 Ultra 512GB",
+      "qty": 2,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S25 Ultra 1TB",
+      "qty": 2,
+      "grade": "A"
+    },
+    {
+      "m": "iPhone 13 Pro 512GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 13 Pro 512GB",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "Samsung Galaxy A33",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy A33 5G",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy A50",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy A53",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "Samsung Galaxy A73 5G",
+      "qty": 1,
+      "grade": "Faulty"
+    },
+    {
+      "m": "Samsung Galaxy Flip 5 256GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy Fold 5 256GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy M54 128GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy Note 20",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy Note 20 Ultra",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S20 Ultra 128GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy S21 Fe",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S21 Plus 256GB",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "Samsung Galaxy S22 128GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy S22 Ultra 256GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy S22 Ultra 5G 512GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S23 128GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy S23 Fe 128GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S24 128GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy S24 Plus 256GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Galaxy S25 Fe 128GB",
+      "qty": 1,
+      "grade": "A"
+    },
+    {
+      "m": "Samsung Galaxy S25 Plus 256GB",
+      "qty": 1,
+      "grade": "A+"
+    },
+    {
+      "m": "Samsung Galaxy Z Flip 6 256GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "Samsung Galaxy Z Flip 6 Silver 256GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "Samsung Z FOLD 5 256GB",
+      "qty": 1,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 11 Pro Max 256GB",
+      "qty": 1,
+      "grade": "C+"
+    },
+    {
+      "m": "iPhone 11 Pro Max 64GB",
+      "qty": 1,
+      "grade": "Faulty"
+    },
+    {
+      "m": "iPhone 12 Mini 128GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 12 Pro 512GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 12 Pro Max 512GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 13 Mini 256GB",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone 13 Pro 1TB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone 14 Pro Max 512GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone 15 Pro Max 1TB",
+      "qty": 1,
+      "grade": "B"
+    },
+    {
+      "m": "iPhone X 256GB",
+      "qty": 1,
+      "grade": "C"
+    },
+    {
+      "m": "iPhone XR 128GB",
+      "qty": 1,
+      "grade": "B+"
+    },
+    {
+      "m": "iPhone XR 64GB",
+      "qty": 1,
+      "grade": "B"
+    }
+  ],
+  "buyPrice": 0,
+  "lotType": "standard",
+  "proposals": [
+    {
+      "id": "p_atelva",
+      "buyerId": "atelva",
+      "amount": 144480,
+      "currency": "EUR"
+    }
+  ]
+});
+}
+
 // ── HELPERS ───────────────────────────────────────────────────────────────────
 const N=(n,d=0)=>isNaN(n)||n==null?'—':new Intl.NumberFormat('fr-FR',{maximumFractionDigits:d}).format(n);
 const P=(n,d=1)=>isNaN(n)||n==null?'—':(n*100).toFixed(d)+'%';

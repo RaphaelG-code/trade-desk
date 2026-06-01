@@ -46,3 +46,43 @@
 - **Découverte** : Toute l'UI est reconstruite via `innerHTML` sur `#main` à chaque changement d'onglet. Pas de composants, pas de state management — tout est re-rendu à chaque fois.
 - **Impact** : En React, ce pattern devient du state + composants réactifs. La logique de rendu actuelle = spec pour les composants à construire.
 - **Source** : Analyse JS de `index.html`
+
+---
+
+## LRN-006 — Ne jamais utiliser le tool Edit sur index.html
+
+- **Date** : 2026-06-01
+- **Découverte** : Le tool `Edit` (et `Write`) tronque la fin de `index.html` à cause d'un problème d'encodage UTF-8 sur les caractères `─` (U+2500) du commentaire `// ── INIT ───`. Le fichier est sauvegardé incomplet — sans `renderTop();render();`, `</script>`, `</body>`, `</html>`.
+- **Impact** : L'app devient complètement non fonctionnelle (page blanche). Peut arriver silencieusement sans message d'erreur visible.
+- **Solution** : Toujours modifier `index.html` via un **script Python** qui lit et écrit en **binaire** (`open(..., 'rb')` / `open(..., 'wb')`). Jamais via Edit/Write de Claude. Après toute modification, valider avec `node -e "new vm.Script(...)"`. Si tronqué : restaurer la fin depuis `git show HEAD:index.html`.
+- **Source** : Session 2026-06-01, multiples occurrences de truncation
+
+---
+
+## LRN-007 — Variable `lot` non définie dans render()
+
+- **Date** : 2026-06-01
+- **Découverte** : Dans la fonction `render()`, le lot actif s'appelle `c.lot` (retourné par `calc()`), pas `lot`. Utiliser `lot` directement provoque `ReferenceError: lot is not defined`.
+- **Impact** : Crash silencieux du dashboard (section offres vide, pas de message sauf dans Console).
+- **Solution** : Toujours déclarer `const lot = c.lot;` en début de bloc avant d'utiliser `lot`, ou utiliser `c.lot` directement.
+- **Source** : Session 2026-06-01, bug offersHtml
+
+---
+
+## LRN-008 — Mismatch de clés : capacité dans items vs pas dans offres acheteur
+
+- **Date** : 2026-06-01
+- **Découverte** : Les items de lot incluent la capacité dans le nom de modèle (ex: `"iPhone 16 Pro Max 256GB"`), mais les offres acheteurs (ex: Atelva) utilisent des noms courts sans capacité (ex: `"iPhone 16 Pro Max"`). La lookup directe par clé ne trouve rien.
+- **Impact** : Les prix acheteurs ne s'affichent pas dans le tableau des offres.
+- **Solution** : Fonction `normM(m)` = `m.replace(/\s+\d+GB$/i,'').trim()` + `lookupPrice(b,m,g)` qui essaie d'abord la clé complète, puis la clé sans capacité.
+- **Source** : Session 2026-06-01, section offresHtml
+
+---
+
+## LRN-009 — Wrap try-catch sur les sections de render() critiques
+
+- **Date** : 2026-06-01
+- **Découverte** : Un crash dans une section de `render()` rend le dashboard entièrement vide sans message visible. L'onglet Paramètres continue de fonctionner car il est dans un `if` séparé qui s'exécute avant.
+- **Impact** : Debugging très difficile sans Console ouverte.
+- **Solution** : Wrapper les nouvelles sections de render() dans `try { ... } catch(e) { console.error(...); fallback=''; }` pendant le développement. Retirer le try-catch une fois la section stabilisée.
+- **Source** : Session 2026-06-01

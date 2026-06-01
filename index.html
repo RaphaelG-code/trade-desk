@@ -304,22 +304,22 @@ const DEFAULT_BUYERS=[
   {id:'telephonecash',name:'TelephoneCash',territory:'fr'}
 ];
 const DEFAULT_REF=[
-  {cat:'Smartphones',m:'iPhone 16 Pro Max 512GB',prices:{fr:1380,dxb:1320}},
-  {cat:'Smartphones',m:'iPhone 16 Pro Max 256GB',prices:{fr:1250,dxb:1200}},
-  {cat:'Smartphones',m:'iPhone 16 Pro 512GB',prices:{fr:1120,dxb:1100}},
-  {cat:'Smartphones',m:'iPhone 16 Pro 256GB',prices:{fr:1050,dxb:1020}},
-  {cat:'Smartphones',m:'iPhone 16 256GB',prices:{fr:880,dxb:850}},
-  {cat:'Smartphones',m:'iPhone 16 128GB',prices:{fr:790,dxb:750}},
-  {cat:'Smartphones',m:'iPhone 15 256GB',prices:{fr:650,dxb:630}},
-  {cat:'Smartphones',m:'iPhone 15 128GB',prices:{fr:580,dxb:560}},
-  {cat:'Smartphones',m:'iPhone 14 128GB',prices:{fr:440,dxb:420}},
-  {cat:'Smartphones',m:'Samsung Galaxy S25 Ultra 256GB',prices:{fr:1250,dxb:1200}},
-  {cat:'Smartphones',m:'Samsung Galaxy S25 256GB',prices:{fr:950,dxb:920}},
-  {cat:'Smartphones',m:'Samsung Galaxy S24 Plus 256GB',prices:{fr:680,dxb:650}},
-  {cat:'Smartphones',m:'Samsung Galaxy S24 256GB',prices:{fr:590,dxb:570}},
-  {cat:'Smartphones',m:'Samsung Galaxy S24 128GB',prices:{fr:540,dxb:520}},
-  {cat:'Smartphones',m:'Samsung Galaxy A06 64GB',prices:{fr:110,dxb:105}},
-  {cat:'Smartphones',m:'Samsung Galaxy A05 64GB',prices:{fr:95,dxb:90}},
+  {cat:'Smartphones',m:'iPhone 16 Pro Max 512GB',vmr:{fr:1380,dxb:1320},prices:{}},
+  {cat:'Smartphones',m:'iPhone 16 Pro Max 256GB',vmr:{fr:1250,dxb:1200},prices:{}},
+  {cat:'Smartphones',m:'iPhone 16 Pro 512GB',vmr:{fr:1120,dxb:1100},prices:{}},
+  {cat:'Smartphones',m:'iPhone 16 Pro 256GB',vmr:{fr:1050,dxb:1020},prices:{}},
+  {cat:'Smartphones',m:'iPhone 16 256GB',vmr:{fr:880,dxb:850},prices:{}},
+  {cat:'Smartphones',m:'iPhone 16 128GB',vmr:{fr:790,dxb:750},prices:{}},
+  {cat:'Smartphones',m:'iPhone 15 256GB',vmr:{fr:650,dxb:630},prices:{}},
+  {cat:'Smartphones',m:'iPhone 15 128GB',vmr:{fr:580,dxb:560},prices:{}},
+  {cat:'Smartphones',m:'iPhone 14 128GB',vmr:{fr:440,dxb:420},prices:{}},
+  {cat:'Smartphones',m:'Samsung Galaxy S25 Ultra 256GB',vmr:{fr:1250,dxb:1200},prices:{}},
+  {cat:'Smartphones',m:'Samsung Galaxy S25 256GB',vmr:{fr:950,dxb:920},prices:{}},
+  {cat:'Smartphones',m:'Samsung Galaxy S24 Plus 256GB',vmr:{fr:680,dxb:650},prices:{}},
+  {cat:'Smartphones',m:'Samsung Galaxy S24 256GB',vmr:{fr:590,dxb:570},prices:{}},
+  {cat:'Smartphones',m:'Samsung Galaxy S24 128GB',vmr:{fr:540,dxb:520},prices:{}},
+  {cat:'Smartphones',m:'Samsung Galaxy A06 64GB',vmr:{fr:110,dxb:105},prices:{}},
+  {cat:'Smartphones',m:'Samsung Galaxy A05 64GB',vmr:{fr:95,dxb:90},prices:{}},
   {cat:'Tablettes',m:'iPad Pro 11 4th Gen WIFI 128GB',prices:{fr:550,dxb:530}},
   {cat:'Accessoires',m:'AirTag - 4 Pack',prices:{fr:85,dxb:80}},
   {cat:'Accessoires',m:'Samsung SmartTag2 - 4 Pack',prices:{fr:70,dxb:65}},
@@ -721,6 +721,22 @@ S.lots.forEach(l=>{
 });
 
 
+
+
+// Migration : smartphones → vmr + prices par acheteur/grade
+S.ref.forEach(r => {
+  if(r.cat === 'Smartphones' || r.cat === 'Tablettes' || r.cat === 'Accessoires') {
+    if(!r.vmr && r.prices && (r.prices.fr != null || r.prices.dxb != null)) {
+      r.vmr = {fr: r.prices.fr || 0, dxb: r.prices.dxb || 0};
+      // Garder seulement les clés buyer_grade dans prices
+      const kept = {};
+      Object.keys(r.prices).forEach(k => { if(!['fr','dxb'].includes(k)) kept[k] = r.prices[k]; });
+      r.prices = kept;
+    }
+    if(!r.vmr) r.vmr = {fr:0, dxb:0};
+    if(!r.prices) r.prices = {};
+  }
+});
 
 // Migration : injecter LOT-2026-002 si absent
 if(!S.lots.find(l=>l.id==='LOT-2026-002')){
@@ -3100,13 +3116,24 @@ if(!S.lots.find(l=>l.id==='LOT-2026-003')){
 });
 }
 
+
+// Migration : buyerOffers sur tous les lots
+S.lots.forEach(l=>{ if(!l.buyerOffers)l.buyerOffers=[]; });
+// Injection offre Atelva dans LOT-2026-003
+(function(){
+  const lot=S.lots.find(l=>l.id==='LOT-2026-003');
+  if(lot&&!lot.buyerOffers.find(o=>o.id==='atelva')){
+    lot.buyerOffers.push({"id": "atelva", "name": "Atelva", "prices": {"iPhone 16 Pro Max_Aplus": 575.0, "iPhone 16 Pro Max_Bplus": 550.0, "Samsung Galaxy S22 5G_Bplus": 125.0, "iPhone 15 Pro Max_Bplus": 425.0, "iPhone 14 Pro Max_Bplus": 340.0, "iPhone 16 Pro_Aplus": 525.0, "iPhone 16 Pro_Bplus": 500.0, "iPhone 13_Bplus": 185.0, "iPhone 14 Pro_Bplus": 315.0, "iPhone 13 Pro Max_Aplus": 280.0, "iPhone 13 Pro Max_Bplus": 260.0, "iPhone 14_Bplus": 220.0, "iPhone 15_Bplus": 300.0, "iPhone 12 Pro Max_Bplus": 200.0, "iPhone 13 Pro_Bplus": 210.0, "iPhone 16_Aplus": 420.0, "iPhone 16_Bplus": 400.0, "Samsung Galaxy S23 Ultra_Bplus": 250.0, "iPhone 12_Bplus": 120.0, "iPhone 15 Pro_Bplus": 370.0, "Samsung Galaxy S24 Ultra_Bplus": 335.0, "iPhone 12 Pro_Bplus": 160.0, "Samsung Galaxy S25 Ultra_Aplus": 460.0, "Samsung Galaxy S25 Ultra_Bplus": 430.0, "iPhone 11_Bplus": 85.0, "Samsung Galaxy S24_Bplus": 215.0, "iPhone 13 Mini_Bplus": 160.0, "Samsung Galaxy S22 Ultra 5G_Bplus": 175.0, "Samsung Galaxy S23 Fe_Bplus": 150.0, "Samsung Galaxy S23 Plus_Bplus": 185.0, "iPhone 11 Pro_Bplus": 115.0, "Samsung Galaxy S22 Plus 5G_Bplus": 135.0, "iPhone 16e_Aplus": 275.0, "iPhone 16e_Bplus": 265.0, "Samsung Galaxy S22 Plus_Bplus": 135.0, "iPhone XR_Bplus": 70.0, "Samsung Galaxy A33 5G_Bplus": 45.0, "Samsung Galaxy Note 20 Ultra_Bplus": 210.0, "Samsung Galaxy S21 Fe_Bplus": 85.0, "Samsung Galaxy S24 Plus_Bplus": 245.0, "Samsung Galaxy S25 Plus_Aplus": 400.0}});
+  }
+})();
+
 // ── HELPERS ───────────────────────────────────────────────────────────────────
 const N=(n,d=0)=>isNaN(n)||n==null?'—':new Intl.NumberFormat('fr-FR',{maximumFractionDigits:d}).format(n);
 const P=(n,d=1)=>isNaN(n)||n==null?'—':(n*100).toFixed(d)+'%';
 const uid=()=>Math.random().toString(36).slice(2,9);
 function terrRate(t){if(!t)return 1;if(t.currency==='EUR')return S.rEur;if(t.currency==='USD')return S.rUsd;return t.customRate||S.rEur;}
 function getRef(m){return S.ref.find(r=>r.m===m)||{prices:{}};}
-function getRefPrice(m,tid){return getRef(m).prices[tid]||0;}
+function getRefPrice(m,tid){const r=getRef(m);return (r.vmr&&r.vmr[tid])||r.prices[tid]||0;}
 
 // ── CALC ──────────────────────────────────────────────────────────────────────
 function getScreenPrice(item, buyer, grade){
@@ -3537,8 +3564,90 @@ function render(){
     const badgeClass=c.buyStatus==='n'?'n':c.buyStatus;
     const badgeIcon=c.buyStatus==='g'?IC.check16:c.buyStatus==='a'||c.buyStatus==='o'?IC.warn16:c.buyStatus==='r'?IC.x16:'';
     const buyBarHtml=c.er>0?buyPriceBarHtml(c.bp,c.er,c.idealB,c.maxB,c.extremeB):'';
+    // ── Offres Reçues ────────────────────────────────────────────────────────
+    let offersHtml='';
+    try {
+    const lot=c.lot;
+    const OGRADES=[
+      {key:'Aplus',lbl:'A+',col:'#059669'},{key:'A',lbl:'A',col:'#16a34a'},
+      {key:'Aprime',lbl:"A'",col:'#15803d'},{key:'Bplus',lbl:'B+',col:'#2563eb'},
+      {key:'B',lbl:'B',col:'#3b82f6'},{key:'Cplus',lbl:'C+',col:'#dc2626'},
+      {key:'C',lbl:'C',col:'#ef4444'},{key:'Faulty',lbl:'❌',col:'#9ca3af'},
+    ];
+    const gKey=g=>OGRADES.find(o=>o.lbl===g||o.key===g)?.key||g;
+    const gCol=g=>OGRADES.find(o=>o.lbl===g||o.key===g)?.col||'#374151';
+    // Normalise model name: strip trailing capacity (e.g. "256GB") for offer key lookup
+    const normM=m=>m.replace(/\s+\d+GB$/i,'').trim();
+    const offerKey=(m,g)=>m+'_'+gKey(g); // storage key (with capacity)
+    const lookupPrice=(b,m,g)=>{
+      const k=offerKey(m,g);
+      if(b.prices&&b.prices[k]!=null) return b.prices[k];
+      const kShort=normM(m)+'_'+gKey(g);
+      return (b.prices&&b.prices[kShort]!=null)?b.prices[kShort]:null;
+    };
+    const buyerOffers=lot.buyerOffers||[];
+    const rows=[...new Map(lot.items.map(i=>[i.m+'|'+(i.grade||'C'),{
+      m:i.m, grade:i.grade||'C',
+      qty:lot.items.filter(x=>x.m===i.m&&(x.grade||'C')===(i.grade||'C')).reduce((s,x)=>s+(x.qty||0),0)
+    }])).values()];
 
-    const negoHtml=`
+    let offersBody='';
+    if(buyerOffers.length>0){
+      const best={};
+      rows.forEach(r=>{const k=offerKey(r.m,r.grade);const vs=buyerOffers.map(b=>{const lp=lookupPrice(b,r.m,r.grade);return lp!=null?lp:0;}).filter(v=>v>0);best[k]=vs.length?Math.max(...vs):0;});
+      const totals=buyerOffers.map(b=>rows.reduce((s,r)=>{const lp=lookupPrice(b,r.m,r.grade);return s+(lp!=null?lp:0)*(r.qty||0);},0));
+      const hdr=buyerOffers.map((b,bi)=>`<th style="background:#eff6ff;color:#1e40af;font-size:11px;font-weight:800;border-left:2px solid #bfdbfe;white-space:nowrap;padding:7px 10px">${b.name} <button onclick="removeBuyerOffer(${S.al},${bi})" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:10px;margin-left:3px">✕</button></th>`).join('');
+      const trs=rows.map(r=>{
+        const k=offerKey(r.m,r.grade);
+        const cells=buyerOffers.map((b,bi)=>{
+          const lp=lookupPrice(b,r.m,r.grade);
+          const v=lp!=null?lp:'';
+          const ib=v!==''&&parseFloat(v)===best[k]&&best[k]>0;
+          return`<td style="border-left:2px solid #f0f9ff;background:${ib?'#f0fdf4':''}">
+            <input class="tin" type="number" value="${v}" style="width:68px;color:${ib?'#15803d':'#374151'};font-weight:${ib?800:500};background:transparent"
+              oninput="setOfferPrice(${S.al},${bi},'${k}',this.value)">${ib?'<span style="font-size:9px;color:#15803d">★</span>':''}
+          </td>`;
+        }).join('');
+        const gc=gCol(r.grade);
+        return`<tr>
+          <td style="font-size:12px;font-weight:600;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.m}">${r.m}</td>
+          <td><span style="background:${gc}18;color:${gc};font-size:11px;font-weight:800;padding:2px 7px;border-radius:9999px">${r.grade}</span></td>
+          <td style="text-align:center;font-size:12px;color:#6b7280">${r.qty}</td>
+          <td style="text-align:right;font-size:12px;font-weight:700;color:${best[k]?'#15803d':'#9ca3af'}">${best[k]?best[k]+' €':'—'}</td>
+          ${cells}
+        </tr>`;
+      }).join('');
+      const totRow=`<tr style="background:#f9fafb">
+        <td colspan="4" style="font-size:12px;font-weight:800;color:#374151;padding:9px 14px">💰 Total estimé lot</td>
+        ${buyerOffers.map((b,bi)=>`<td style="border-left:2px solid #f0f9ff;font-size:13px;color:#1e40af;font-weight:800;padding:9px 8px">${N(totals[bi])} €</td>`).join('')}
+      </tr>`;
+      offersBody=`<div class="twrap" style="overflow-x:auto"><table class="dt">
+        <thead><tr>
+          <th>Modèle</th><th style="width:48px">Grade</th><th style="width:48px">Qté</th>
+          <th style="width:70px;color:#15803d">Meilleur</th>${hdr}
+        </tr></thead><tbody>${trs}${totRow}</tbody>
+      </table></div>`;
+    } else {
+      offersBody=`<div style="color:#9ca3af;font-size:13px;padding:16px 0;text-align:center">Aucune offre — ajoutez un acheteur ci-dessous</div>`;
+    }
+    const buyOpts=S.buyers.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
+    offersHtml=`
+    <div class="sh"><div class="sh-bar" style="background:#8b5cf6"></div><span class="sh-title">Offres Reçues</span></div>
+    <div class="nego-wrap" style="border-color:#ede9fe">
+      ${offersBody}
+      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center">
+        <select id="ofr_sel_${S.al}" class="p-buyer-sel" style="min-width:150px" onchange="document.getElementById('ofr_new_${S.al}').style.display=this.value==='__new__'?'block':'none'">
+          <option value="">— Acheteur existant —</option>
+          ${buyOpts}
+          <option value="__new__">✏️ Nouveau acheteur...</option>
+        </select>
+        <input id="ofr_new_${S.al}" class="ain" placeholder="Nom du nouvel acheteur" style="display:none;width:160px;padding:8px 12px">
+        <button class="btn-blue" onclick="addBuyerOffer(${S.al})" style="background:#7c3aed">${IC.plus} Ajouter</button>
+      </div>
+    </div>`;
+    } catch(e) { console.error('offersHtml error:', e); offersHtml=''; }
+
+    const negoHtml=offersHtml+`
     <div class="sh"><div class="sh-bar" style="background:#f97316"></div><span class="sh-title">Négociation en Cours</span></div>
     <div class="nego-wrap">
       <div class="nego-subtitle">
@@ -3972,13 +4081,68 @@ function render(){
         </div>
         <div style="padding:0 4px 16px;">${subPanelHtml}</div>`;
 
+    } else if(activeCat==='Smartphones'){
+      // ── Mode Smartphones : VMR + prix marché moyens par grade ────────────────
+      const MGRADE=[
+        {key:'Aplus', label:'A+',  color:'#059669'},
+        {key:'A',     label:'A',   color:'#16a34a'},
+        {key:'Aprime',label:"A'",  color:'#15803d'},
+        {key:'Bplus', label:'B+',  color:'#2563eb'},
+        {key:'B',     label:'B',   color:'#3b82f6'},
+        {key:'Cplus', label:'C+',  color:'#dc2626'},
+        {key:'C',     label:'C',   color:'#ef4444'},
+        {key:'Faulty',label:'❌',  color:'#9ca3af'},
+      ];
+      const items=S.ref.filter(r=>r.cat==='Smartphones');
+      const totalCols=1+S.territories.length+MGRADE.length+1;
+      const vmrHeaders=S.territories.map(t=>`<th style="background:#f0fdf4;color:#15803d;font-size:10px;font-weight:800;text-align:center;min-width:72px">VMR ${t.flag}<br><span style="font-weight:400;font-size:9px">${t.currency}</span></th>`).join('');
+      const gradeHeaders=MGRADE.map((g,gi)=>`<th style="color:${g.color};font-size:11px;min-width:58px;border-left:${gi===0?'2px solid #e5e7eb':'none'}">${g.label}</th>`).join('');
+      const phoneRows=items.map(r=>{
+        const ri=S.ref.indexOf(r);
+        const vmrCells=S.territories.map(t=>`<td><input class="tin" type="number" value="${(r.vmr&&r.vmr[t.id])||''}" style="width:68px;color:#15803d;font-weight:700" oninput="if(!S.ref[${ri}].vmr)S.ref[${ri}].vmr={};S.ref[${ri}].vmr['${t.id}']=parseFloat(this.value)||0;save()"></td>`).join('');
+        const gradeCells=MGRADE.map((g,gi)=>{
+          const val=r.prices&&r.prices[g.key]!=null?r.prices[g.key]:'';
+          return`<td style="border-left:${gi===0?'2px solid #e5e7eb':'none'}"><input class="tin" type="number" value="${val}" style="width:54px;color:${g.color}" oninput="if(!S.ref[${ri}].prices)S.ref[${ri}].prices={};S.ref[${ri}].prices['${g.key}']=parseFloat(this.value)||null;save()"></td>`;
+        }).join('');
+        return`<tr>
+          <td><input class="tin" value="${r.m}" style="width:210px;font-weight:500;font-family:Inter,sans-serif" onchange="S.ref[${ri}].m=this.value;save()"></td>
+          ${vmrCells}${gradeCells}
+          <td><button class="tdel" onclick="S.ref.splice(${ri},1);save();render()">${IC.trash}</button></td>
+        </tr>`;
+      }).join('');
+      catPanelHtml=`
+        <div style="font-size:11px;color:#6b7280;padding:10px 16px 6px;line-height:1.6">
+          <b>VMR</b> = Valeur Marché Réelle &nbsp;·&nbsp;
+          <b>Prix par grade</b> = moyenne marché calculée sur vos offres historiques
+        </div>
+        <div class="twrap" style="overflow-x:auto"><table class="dt">
+          <thead>
+            <tr>
+              <th>Modèle</th>${vmrHeaders}
+              <th colspan="${MGRADE.length}" style="background:#eff6ff;color:#1e40af;font-size:10px;font-weight:800;text-align:center;border-left:2px solid #e5e7eb">Prix marché moyen par grade (€)</th>
+              <th></th>
+            </tr>
+            <tr><th></th>${S.territories.map(()=>'<th></th>').join('')}${gradeHeaders}<th></th></tr>
+          </thead>
+          <tbody>${phoneRows||`<tr><td colspan="${totalCols}" style="text-align:center;padding:24px;color:#9ca3af">Aucun modèle</td></tr>`}</tbody>
+        </table></div>
+        <div class="aform" style="padding:12px 16px;margin:10px 0 0;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+          <div class="arow">
+            <div class="afield" style="flex:1;min-width:180px"><label>Modèle</label>
+              <input class="ain" id="rm_Smartphones" placeholder="Ex: iPhone 17 128GB" style="width:100%">
+            </div>
+            ${S.territories.map(t=>`<div class="afield" style="width:90px"><label>VMR ${t.flag}</label><input class="ain" id="rp_Smartphones_${t.id}" type="number" placeholder="0" style="width:100%"></div>`).join('')}
+            <button class="btn-blue" onclick="addRefItem('Smartphones')" style="align-self:flex-end">${IC.plus} Ajouter</button>
+          </div>
+        </div>`;
+
     } else {
-      // ── Mode standard (Smartphones / Tablettes / Accessoires / custom) ────
+      // ── Mode standard (Tablettes / Accessoires / custom) ──────────────────
       const items=S.ref.filter(r=>r.cat===activeCat);
       const terrHeaders=S.territories.map(t=>`<th>VMR ${t.flag} (${t.currency})</th>`).join('');
       const refRows=items.map(r=>{
         const ri=S.ref.indexOf(r);
-        const terrInputs=S.territories.map(t=>`<td><input class="tin" type="number" value="${r.prices[t.id]||''}" style="width:90px" oninput="S.ref[${ri}].prices['${t.id}']=parseFloat(this.value)||0;save()"></td>`).join('');
+        const terrInputs=S.territories.map(t=>`<td><input class="tin" type="number" value="${(r.vmr&&r.vmr[t.id])||r.prices&&r.prices[t.id]||''}" style="width:90px" oninput="if(!S.ref[${ri}].vmr)S.ref[${ri}].vmr={};S.ref[${ri}].vmr['${t.id}']=parseFloat(this.value)||0;save()"></td>`).join('');
         return`<tr>
           <td><input class="tin" value="${r.m}" style="width:230px;font-weight:500;font-family:Inter,sans-serif" onchange="S.ref[${ri}].m=this.value;save()"></td>
           ${terrInputs}
@@ -3989,7 +4153,7 @@ function render(){
         <div class="aform" style="padding:12px 16px;margin:12px 0 8px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
           <div class="arow">
             <div class="afield" style="flex:1;min-width:180px"><label>Modèle</label>
-              <input class="ain" id="rm_${activeCat}" placeholder="Ex: iPhone 18 128GB" style="width:100%">
+              <input class="ain" id="rm_${activeCat}" placeholder="Ex: iPad 10 64GB" style="width:100%">
             </div>
             ${S.territories.map(t=>`<div class="afield" style="width:100px"><label>VMR ${t.flag}</label><input class="ain" id="rp_${activeCat}_${t.id}" type="number" placeholder="0" style="width:100%"></div>`).join('')}
             <button class="btn-blue" onclick="addRefItem('${activeCat}')" style="align-self:flex-end">${IC.plus} Ajouter</button>
@@ -4021,6 +4185,38 @@ function render(){
 }
 
 // ── ACTIONS ───────────────────────────────────────────────────────────────────
+
+function addBuyerOffer(lotIdx){
+  const sel=document.getElementById('ofr_sel_'+lotIdx);
+  const newInp=document.getElementById('ofr_new_'+lotIdx);
+  let id,name;
+  if(!sel)return;
+  if(sel.value==='__new__'){
+    name=(newInp?.value||'').trim();
+    if(!name)return;
+    id='buyer_'+Math.random().toString(36).slice(2,7);
+    S.buyers.push({id,name,territory:'fr'});
+  } else if(sel.value){
+    id=sel.value;
+    name=S.buyers.find(b=>b.id===id)?.name||id;
+  } else return;
+  if(!S.lots[lotIdx].buyerOffers)S.lots[lotIdx].buyerOffers=[];
+  if(S.lots[lotIdx].buyerOffers.find(o=>o.id===id))return;
+  S.lots[lotIdx].buyerOffers.push({id,name,prices:{}});
+  save();render();
+}
+function removeBuyerOffer(lotIdx,bi){
+  if(!confirm('Supprimer cet acheteur ?'))return;
+  S.lots[lotIdx].buyerOffers.splice(bi,1);
+  save();render();
+}
+function setOfferPrice(lotIdx,bi,key,val){
+  if(!S.lots[lotIdx].buyerOffers[bi].prices)S.lots[lotIdx].buyerOffers[bi].prices={};
+  const v=parseFloat(val);
+  S.lots[lotIdx].buyerOffers[bi].prices[key]=isNaN(v)?null:v;
+  save();
+}
+
 function addProposal(){
   S.lots[S.al].proposals.push({id:uid(),buyerId:S.buyers[0]?.id||'',amount:0,currency:'EUR'});
   save();render();
@@ -4053,9 +4249,16 @@ function addRefItem(cat){
   const safeCat=cat||S.refCat;
   const m=document.getElementById(`rm_${safeCat}`)?.value?.trim();
   if(!m)return;
-  const prices={};
-  S.territories.forEach(t=>{prices[t.id]=parseFloat(document.getElementById(`rp_${safeCat}_${t.id}`)?.value)||0;});
-  S.ref.push({cat:safeCat,m,prices});save();render();
+  if(safeCat==='Smartphones'){
+    const vmr={};
+    S.territories.forEach(t=>{vmr[t.id]=parseFloat(document.getElementById(`rp_Smartphones_${t.id}`)?.value)||0;});
+    S.ref.push({cat:safeCat,m,vmr,prices:{}});
+  } else {
+    const vmr={};
+    S.territories.forEach(t=>{vmr[t.id]=parseFloat(document.getElementById(`rp_${safeCat}_${t.id}`)?.value)||0;});
+    S.ref.push({cat:safeCat,m,vmr,prices:{}});
+  }
+  save();render();
 }
 function addCat(){
   const name=document.getElementById('nc')?.value?.trim();

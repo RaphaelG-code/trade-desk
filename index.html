@@ -685,7 +685,7 @@ let S=saved||{
 };
 // ── BUYERS_SCREENS config ─────────────────────────────────────────────────────
 const BUYERS_SCREENS=[
-  {id:'sg', label:'Smartgrade', flag:'🇫🇷', currency:'EUR', priceKey:'sg', rate:()=>S.rEur},
+  {id:'sg', label:'Smartgrade', flag:'🇫🇷', currency:'USD', priceKey:'sg', rate:()=>S.rUsd},
   {id:'bb', label:'BuybackLCD', flag:'🇫🇷', currency:'EUR', priceKey:'bb', rate:()=>S.rEur},
   {id:'fnc', label:'Fix N Cover', flag:'🇫🇷', currency:'EUR', priceKey:'fnc', rate:()=>S.rEur},
   {id:'ty', label:'TOPYET', flag:'🇨🇳', currency:'USD', priceKey:'ty', rate:()=>S.rUsd},
@@ -694,6 +694,8 @@ const BUYERS_SCREENS=[
 // migrations
 if(!S.territories)S.territories=JSON.parse(JSON.stringify(DEFAULT_TERRITORIES));
 if(!S.buyers)S.buyers=JSON.parse(JSON.stringify(DEFAULT_BUYERS));
+S.buyers.forEach(b=>{if(!b.currency){const t=S.territories.find(x=>x.id===b.territory);b.currency=t?.currency||'EUR';}});
+S.lots.forEach(lot=>{if(lot.buyerOffers)lot.buyerOffers.forEach(b=>{if(!b.currency)b.currency='EUR';});});
 if(!S.ref[0]||!S.ref[0].cat)S.ref=DEFAULT_REF.map(r=>({...r,prices:{...r.prices}}));
 // Migration : injecter les entrées Écrans si absentes du state sauvegardé
 const defaultEcransCount=DEFAULT_REF.filter(r=>r.cat==='Écrans').length;
@@ -3127,6 +3129,14 @@ S.lots.forEach(l=>{ if(!l.buyerOffers)l.buyerOffers=[]; });
   }
 })();
 
+// Injection offre Smartgrade (HK) dans LOT-2026-003
+(function(){
+  const lot=S.lots.find(l=>l.id==='LOT-2026-003');
+  if(lot&&!lot.buyerOffers.find(o=>o.id==='smartgrade_hk')){
+    lot.buyerOffers.push({"id": "smartgrade_hk", "name": "Smartgrade (HK)", "currency": "USD", "prices": {"iPhone 15 Pro_Cplus": 326.0, "iPhone 15 Pro_C": 326.0, "iPhone 15 Pro_Faulty": 231.0, "iPhone 15 Plus_Cplus": 245.0, "iPhone 15 Plus_C": 245.0, "iPhone 13 Mini_Cplus": 34.0, "iPhone 13 Mini_C": 34.0, "Samsung Galaxy S22 Plus_Cplus": 69.0, "Samsung Galaxy S22 Plus_C": 69.0, "Samsung Galaxy A33_Cplus": 40.0, "Samsung Galaxy A33_C": 40.0, "Samsung Galaxy A50_Cplus": 16.0, "Samsung Galaxy A50_C": 16.0, "Samsung Galaxy Fold 5_Cplus": 299.0, "Samsung Galaxy Fold 5_C": 299.0, "Samsung Galaxy M54_Cplus": 29.0, "Samsung Galaxy M54_C": 29.0, "Samsung Galaxy Note 20_Cplus": 62.0, "Samsung Galaxy Note 20_C": 62.0, "Samsung Galaxy S20 Ultra_Cplus": 121.0, "Samsung Galaxy S20 Ultra_C": 121.0, "Samsung Galaxy S22_Cplus": 85.0, "Samsung Galaxy S22_C": 85.0, "Samsung Galaxy S22 Ultra_Cplus": 167.0, "Samsung Galaxy S22 Ultra_C": 167.0, "Samsung Galaxy S23_Cplus": 149.0, "Samsung Galaxy S23_C": 149.0, "Samsung Galaxy Z Flip 6_Cplus": 204.0, "Samsung Galaxy Z Flip 6_C": 204.0, "iPhone 12 Mini_Cplus": 34.0, "iPhone 12 Mini_C": 34.0, "iPhone X_Cplus": 20.0, "iPhone X_C": 20.0, "iPhone 16 Plus_Cplus": 313.0, "iPhone 16 Plus_C": 313.0, "iPhone 11_Cplus": 47.0, "iPhone 11_C": 47.0, "iPhone 11_Faulty": 40.0, "Samsung Galaxy S24_Cplus": 190.0, "Samsung Galaxy S24_C": 190.0, "Samsung Galaxy S22 Ultra 5G_Cplus": 167.0, "Samsung Galaxy S22 Ultra 5G_C": 167.0, "Samsung Galaxy S22 Plus 5G_Cplus": 87.0, "Samsung Galaxy S22 Plus 5G_C": 87.0, "Samsung Galaxy S21 5G_Cplus": 58.0, "Samsung Galaxy S21 5G_C": 58.0, "iPhone 12_Cplus": 54.0, "iPhone 12_C": 54.0, "iPhone 14 Plus_Cplus": 149.0, "iPhone 14 Plus_C": 149.0, "iPhone 14 Plus_Faulty": 95.0, "Samsung Galaxy S23 Plus_Cplus": 163.0, "Samsung Galaxy S23 Plus_C": 163.0, "Samsung Galaxy S21 Fe 5G_Cplus": 61.0, "Samsung Galaxy S21 Fe 5G_C": 61.0, "iPhone 16 Pro_Cplus": 408.0, "iPhone 16 Pro_C": 408.0, "iPhone 16 Pro_Faulty": 299.0, "iPhone 15_Cplus": 245.0, "iPhone 15_C": 245.0, "iPhone 15_Faulty": 177.0, "Samsung Galaxy S24 Ultra_Cplus": 373.0, "Samsung Galaxy S24 Ultra_C": 373.0, "iPhone 12 Pro_Cplus": 88.0, "iPhone 12 Pro_C": 88.0, "iPhone 12 Pro_Faulty": 74.0, "iPhone 15 Pro Max_Cplus": 422.0, "iPhone 15 Pro Max_C": 422.0, "iPhone 15 Pro Max_Faulty": 313.0, "iPhone 13 Pro_Cplus": 190.0, "iPhone 13 Pro_C": 190.0, "iPhone 13 Pro_Faulty": 149.0, "iPhone 13 Pro Max_Cplus": 224.0, "iPhone 13 Pro Max_C": 224.0, "iPhone 13 Pro Max_Faulty": 177.0, "iPhone 14_Cplus": 122.0, "iPhone 14_C": 122.0, "iPhone 14_Faulty": 95.0, "Samsung Galaxy S23 Ultra_Cplus": 257.0, "Samsung Galaxy S23 Ultra_C": 257.0, "iPhone 12 Pro Max_Cplus": 136.0, "iPhone 12 Pro Max_C": 136.0, "iPhone 12 Pro Max_Faulty": 88.0, "iPhone 13_Cplus": 122.0, "iPhone 13_C": 122.0, "iPhone 13_Faulty": 95.0, "iPhone 14 Pro_Cplus": 231.0, "iPhone 14 Pro_C": 231.0, "iPhone 14 Pro_Faulty": 163.0, "iPhone 14 Pro Max_Cplus": 272.0, "iPhone 14 Pro Max_C": 272.0, "iPhone 14 Pro Max_Faulty": 204.0, "Samsung Galaxy S22 5G_Cplus": 85.0, "Samsung Galaxy S22 5G_C": 85.0}});
+  }
+})();
+
 // ── HELPERS ───────────────────────────────────────────────────────────────────
 const N=(n,d=0)=>isNaN(n)||n==null?'—':new Intl.NumberFormat('fr-FR',{maximumFractionDigits:d}).format(n);
 const P=(n,d=1)=>isNaN(n)||n==null?'—':(n*100).toFixed(d)+'%';
@@ -3512,17 +3522,17 @@ function render(){
         <span class="tc-tag g">✅ IDEAL BUY PRICE — TARGET</span>
         <div class="tc-name g">Commencez avec cette offre</div>
         <div class="tc-val g">${N(c.idealB)} ILS</div>
-        <div class="tc-eur g">≈ ${N(c.idealB/S.rEur)} €</div>
+        <div class="tc-eur g">≈ ${N(c.idealB/S.rUsd)} $</div>
         <div class="tc-reco g">Start with this offer. At this price your margin exceeds your ${P(S.tMarg,0)} target.</div>
       </div>
       <div class="tc a">
         <span class="tc-tag a">⚠️ MAX BUY PRICE — CEILING</span>
         <div class="tc-name a">Plafond de négociation</div>
         <div class="tc-val a">${N(c.maxB)} ILS</div>
-        <div class="tc-eur a">≈ ${N(c.maxB/S.rEur)} €</div>
+        <div class="tc-eur a">≈ ${N(c.maxB/S.rUsd)} $</div>
         <div style="display:inline-flex;align-items:center;gap:5px;background:#fef3c7;border:1px solid #fde68a;border-radius:6px;padding:3px 9px;margin-bottom:6px;">
           <span style="font-size:10px;font-weight:700;color:#92400e;">+${N(deltaMaxIdeal)} ILS vs Ideal</span>
-          <span style="font-size:10px;color:#b45309;">(+${N(deltaMaxIdeal/S.rEur)} €)</span>
+          <span style="font-size:10px;color:#b45309;">(+${N(deltaMaxIdeal/S.rUsd)} $)</span>
         </div>
         <div class="tc-reco a">At this price you exactly reach your ${P(S.tMarg,0)} margin target. Do not go above without a clear reason.</div>
       </div>
@@ -3530,10 +3540,10 @@ function render(){
         <span class="tc-tag o">🔥 EXTREME RISK — I WANT THE DEAL</span>
         <div class="tc-name o">Zone de risque élevé</div>
         <div class="tc-val o">${N(c.extremeB)} ILS</div>
-        <div class="tc-eur o">≈ ${N(c.extremeB/S.rEur)} €</div>
+        <div class="tc-eur o">≈ ${N(c.extremeB/S.rUsd)} $</div>
         <div style="display:inline-flex;align-items:center;gap:5px;background:#ffedd5;border:1px solid #fed7aa;border-radius:6px;padding:3px 9px;margin-bottom:6px;">
           <span style="font-size:10px;font-weight:700;color:#9a3412;">+${N(deltaExtremeMax)} ILS vs Max</span>
-          <span style="font-size:10px;color:#c2410c;">(+${N(deltaExtremeMax/S.rEur)} €)</span>
+          <span style="font-size:10px;color:#c2410c;">(+${N(deltaExtremeMax/S.rUsd)} $)</span>
         </div>
         <div class="tc-reco o">Above this price your capital is at risk. Margin drops below 10%. Only if you really want the deal.</div>
       </div>
@@ -3543,7 +3553,7 @@ function render(){
     const proposalRows=c.proposals.map((p,i)=>{
       const ilsDisplay=p.amtIls>0?`≈ ${N(p.amtIls)} ILS`:'';
       return`<div class="proposal-row">
-        <select class="p-buyer-sel" onchange="S.lots[${S.al}].proposals[${i}].buyerId=this.value;save();render()">
+        <select class="p-buyer-sel" onchange="S.lots[${S.al}].proposals[${i}].buyerId=this.value;const _b=S.buyers.find(x=>x.id===this.value);if(_b?.currency)S.lots[${S.al}].proposals[${i}].currency=_b.currency;save();render()">
           ${S.buyers.map(b=>`<option value="${b.id}"${p.buyerId===b.id?' selected':''}>${b.name}</option>`).join('')}
         </select>
         <span class="p-terr">${p.terr?.flag||''} ${p.terr?.name||''}</span>
@@ -3594,15 +3604,20 @@ function render(){
     let offersBody='';
     if(buyerOffers.length>0){
       const best={};
-      rows.forEach(r=>{const k=offerKey(r.m,r.grade);const vs=buyerOffers.map(b=>{const lp=lookupPrice(b,r.m,r.grade);return lp!=null?lp:0;}).filter(v=>v>0);best[k]=vs.length?Math.max(...vs):0;});
+      rows.forEach(r=>{
+        const k=offerKey(r.m,r.grade);
+        let bestPrice=0,bestCur='EUR';
+        buyerOffers.forEach(b=>{const lp=lookupPrice(b,r.m,r.grade);if(lp!=null&&lp>0&&lp>bestPrice){bestPrice=lp;bestCur=b.currency||'EUR';}});
+        best[k]={price:bestPrice,currency:bestCur};
+      });
       const totals=buyerOffers.map(b=>rows.reduce((s,r)=>{const lp=lookupPrice(b,r.m,r.grade);return s+(lp!=null?lp:0)*(r.qty||0);},0));
-      const hdr=buyerOffers.map((b,bi)=>`<th style="background:#eff6ff;color:#1e40af;font-size:11px;font-weight:800;border-left:2px solid #bfdbfe;white-space:nowrap;padding:7px 10px">${b.name} <button onclick="removeBuyerOffer(${S.al},${bi})" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:10px;margin-left:3px">✕</button></th>`).join('');
+      const hdr=buyerOffers.map((b,bi)=>{const cs=b.currency==='USD'?'$':'€';return`<th style="background:#eff6ff;color:#1e40af;font-size:11px;font-weight:800;border-left:2px solid #bfdbfe;white-space:nowrap;padding:7px 10px">${b.name} <span style="color:#6b7280;font-weight:600">${cs}</span> <button onclick="removeBuyerOffer(${S.al},${bi})" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:10px;margin-left:3px">✕</button></th>`;}).join('');
       const trs=rows.map(r=>{
         const k=offerKey(r.m,r.grade);
         const cells=buyerOffers.map((b,bi)=>{
           const lp=lookupPrice(b,r.m,r.grade);
           const v=lp!=null?lp:'';
-          const ib=v!==''&&parseFloat(v)===best[k]&&best[k]>0;
+          const ib=v!==''&&parseFloat(v)===best[k].price&&best[k].price>0;
           return`<td style="border-left:2px solid #f0f9ff;background:${ib?'#f0fdf4':''}">
             <input class="tin" type="number" value="${v}" style="width:68px;color:${ib?'#15803d':'#374151'};font-weight:${ib?800:500};background:transparent"
               oninput="setOfferPrice(${S.al},${bi},'${k}',this.value)">${ib?'<span style="font-size:9px;color:#15803d">★</span>':''}
@@ -3613,37 +3628,56 @@ function render(){
           <td style="font-size:12px;font-weight:600;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.m}">${r.m}</td>
           <td><span style="background:${gc}18;color:${gc};font-size:11px;font-weight:800;padding:2px 7px;border-radius:9999px">${r.grade}</span></td>
           <td style="text-align:center;font-size:12px;color:#6b7280">${r.qty}</td>
-          <td style="text-align:right;font-size:12px;font-weight:700;color:${best[k]?'#15803d':'#9ca3af'}">${best[k]?best[k]+' €':'—'}</td>
+          <td style="text-align:right;font-size:12px;font-weight:700;color:${best[k].price?'#15803d':'#9ca3af'}">${best[k].price?best[k].price+(best[k].currency==='USD'?' $':' €'):'—'}</td>
           ${cells}
         </tr>`;
-      }).join('');
+      }); // array
       const totRow=`<tr style="background:#f9fafb">
         <td colspan="4" style="font-size:12px;font-weight:800;color:#374151;padding:9px 14px">💰 Total estimé lot</td>
-        ${buyerOffers.map((b,bi)=>`<td style="border-left:2px solid #f0f9ff;font-size:13px;color:#1e40af;font-weight:800;padding:9px 8px">${N(totals[bi])} €</td>`).join('')}
+        ${buyerOffers.map((b,bi)=>`<td style="border-left:2px solid #f0f9ff;font-size:13px;color:#1e40af;font-weight:800;padding:9px 8px">${N(totals[bi])} ${(b.currency||'EUR')==='USD'?'$':'€'}</td>`).join('')}
       </tr>`;
-      offersBody=`<div class="twrap" style="overflow-x:auto"><table class="dt">
-        <thead><tr>
-          <th>Modèle</th><th style="width:48px">Grade</th><th style="width:48px">Qté</th>
-          <th style="width:70px;color:#15803d">Meilleur</th>${hdr}
-        </tr></thead><tbody>${trs}${totRow}</tbody>
-      </table></div>`;
+      const PREVIEW_ROWS=5;
+      const trsPreview=trs.slice(0,PREVIEW_ROWS);
+      const trsRest=trs.slice(PREVIEW_ROWS);
+      const expandBtn=trsRest.length?`<tr id="ofr_expand_${S.al}">
+        <td colspan="${4+buyerOffers.length}" style="text-align:center;padding:10px;background:#f5f3ff;cursor:pointer;color:#7c3aed;font-size:12px;font-weight:700;border-top:2px solid #ede9fe"
+          onclick="(function(){var t=document.getElementById('ofr_rest_${S.al}');var b=document.getElementById('ofr_expand_${S.al}');if(t.style.display==='none'){t.style.display='';b.cells[0].textContent='▲ Réduire';}else{t.style.display='none';b.cells[0].textContent='▼ Voir les ${trsRest.length} autres références';}})()">▼ Voir les ${trsRest.length} autres références
+        </td></tr>`:'';
+      const trsRestHtml=trsRest.length?`<tbody id="ofr_rest_${S.al}" style="display:none">${trsRest.join('')}</tbody>`:'';
+      offersBody=`
+        <div style="overflow:auto;max-height:440px;border:1px solid #e5e7eb;border-radius:10px;">
+          <table class="dt" style="min-width:100%;border:none">
+            <thead style="position:sticky;top:0;z-index:2"><tr style="background:#f8f7ff">
+              <th style="white-space:nowrap">Modèle</th>
+              <th style="width:48px">Grade</th>
+              <th style="width:48px">Qté</th>
+              <th style="width:70px;color:#15803d">Meilleur</th>
+              ${hdr}
+            </tr></thead>
+            <tbody>${trsPreview.join('')}${expandBtn}</tbody>
+            ${trsRestHtml}
+            <tfoot style="position:sticky;bottom:0;background:#f9fafb">${totRow}</tfoot>
+          </table>
+        </div>`;
     } else {
       offersBody=`<div style="color:#9ca3af;font-size:13px;padding:16px 0;text-align:center">Aucune offre — ajoutez un acheteur ci-dessous</div>`;
     }
     const buyOpts=S.buyers.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
+    const addBuyerRow=`<div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap;align-items:center">
+      <select id="ofr_sel_${S.al}" class="p-buyer-sel" style="min-width:150px" onchange="document.getElementById('ofr_new_${S.al}').style.display=this.value==='__new__'?'block':'none';const _ob=S.buyers.find(b=>b.id===this.value);const _ocs=document.getElementById('ofr_cur_${S.al}');if(_ocs&&_ob?.currency)_ocs.value=_ob.currency;">
+        <option value="">— Acheteur existant —</option>
+        ${buyOpts}
+        <option value="__new__">✏️ Nouveau acheteur...</option>
+      </select>
+      <input id="ofr_new_${S.al}" class="ain" placeholder="Nom du nouvel acheteur" style="display:none;width:160px;padding:8px 12px">
+      <select id="ofr_cur_${S.al}" style="font-size:12px;font-weight:700;border:1.5px solid #e5e7eb;border-radius:8px;padding:6px 10px;background:#fff;cursor:pointer;font-family:Inter,sans-serif;color:#374151"><option value="EUR">€ EUR</option><option value="USD">$ USD</option></select>
+      <button class="btn-blue" onclick="addBuyerOffer(${S.al})" style="background:#7c3aed">${IC.plus} Ajouter acheteur</button>
+    </div>`;
     offersHtml=`
     <div class="sh"><div class="sh-bar" style="background:#8b5cf6"></div><span class="sh-title">Offres Reçues</span></div>
     <div class="nego-wrap" style="border-color:#ede9fe">
+      ${addBuyerRow}
       ${offersBody}
-      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center">
-        <select id="ofr_sel_${S.al}" class="p-buyer-sel" style="min-width:150px" onchange="document.getElementById('ofr_new_${S.al}').style.display=this.value==='__new__'?'block':'none'">
-          <option value="">— Acheteur existant —</option>
-          ${buyOpts}
-          <option value="__new__">✏️ Nouveau acheteur...</option>
-        </select>
-        <input id="ofr_new_${S.al}" class="ain" placeholder="Nom du nouvel acheteur" style="display:none;width:160px;padding:8px 12px">
-        <button class="btn-blue" onclick="addBuyerOffer(${S.al})" style="background:#7c3aed">${IC.plus} Ajouter</button>
-      </div>
     </div>`;
     } catch(e) { console.error('offersHtml error:', e); offersHtml=''; }
 
@@ -3793,7 +3827,7 @@ function render(){
     let rows='',thead='',catFilterBar='';
     if(isScreensLot){
       // Colonnes: Modèle | Grade | Qté | SG€ | BB€ | TY$ | Best ILS
-      thead=`<tr><th>Modèle</th><th>Grade</th><th>Qté</th><th style="color:#16a34a;font-size:11px">SG €/u</th><th style="color:#2563eb;font-size:11px">BB €/u</th><th style="color:#7c3aed;font-size:11px">TY $/u</th><th>Best Exit (ILS)</th><th></th></tr>`;
+      thead=`<tr><th>Modèle</th><th>Grade</th><th>Qté</th><th style="color:#16a34a;font-size:11px">SG $/u</th><th style="color:#2563eb;font-size:11px">BB €/u</th><th style="color:#7c3aed;font-size:11px">TY $/u</th><th>Best Exit (ILS)</th><th></th></tr>`;
       rows=c.lot.items.length?c.lot.items.map((it,i)=>{
         const ref=getRef(it.m);
         const grade=it.grade||'C';
@@ -3802,7 +3836,7 @@ function render(){
         // FNC fallback grade A→B
         const ty=ref.prices?.['ty_'+grade]||0;
         // Best per unit in ILS
-        const sgIls=sg*S.rEur, bbIls=bb*S.rEur, tyIls=ty*S.rUsd;
+        const sgIls=sg*S.rUsd, bbIls=bb*S.rEur, tyIls=ty*S.rUsd;
         const bestUnitIls=Math.max(sgIls,bbIls,tyIls);
         const bestIls=bestUnitIls*(it.qty||0);
         const qty=it.qty||0;
@@ -3814,7 +3848,7 @@ function render(){
             ${['A','B','C','D'].map(g=>`<option value="${g}"${g===grade?' selected':''}>Grade ${g}</option>`).join('')}
           </select></td>
           <td><input class="tin" type="number" value="${it.qty}" style="width:64px" oninput="S.lots[${S.al}].items[${i}].qty=parseInt(this.value)||0;save();render()"></td>
-          <td style="color:#16a34a;font-family:monospace;font-size:12px">${sg>0?sg.toFixed(1)+' €':'—'}</td>
+          <td style="color:#16a34a;font-family:monospace;font-size:12px">${sg>0?sg.toFixed(1)+' $':'—'}</td>
           <td style="color:#2563eb;font-family:monospace;font-size:12px">${bb>0?bb.toFixed(1)+' €':'—'}</td>
           <td style="color:#7c3aed;font-family:monospace;font-size:12px">${ty>0?ty.toFixed(1)+' $':'—'}</td>
           <td style="color:#1d4ed8;font-weight:700;font-family:monospace;font-size:12px">${N(bestIls)} ILS</td>
@@ -3932,9 +3966,13 @@ function render(){
       <div class="buyer-card">
         <div>
           <input style="font-size:13px;font-weight:600;color:#111827;border:none;background:transparent;outline:none;width:130px;font-family:Inter,sans-serif" value="${b.name}" onchange="S.buyers[${i}].name=this.value;save()">
-          <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:3px;">
             <select style="font-size:11px;color:#6b7280;border:none;background:transparent;cursor:pointer;font-family:Inter,sans-serif" onchange="S.buyers[${i}].territory=this.value;save()">
               ${S.territories.map(t=>`<option value="${t.id}"${b.territory===t.id?' selected':''}>${t.flag} ${t.name}</option>`).join('')}
+            </select>
+            <select style="font-size:11px;font-weight:700;border:1px solid #e5e7eb;border-radius:6px;padding:2px 6px;background:#fff;cursor:pointer;font-family:Inter,sans-serif;color:${(b.currency||'EUR')==='USD'?'#7c3aed':'#0369a1'}" onchange="S.buyers[${i}].currency=this.value;save();render()">
+              <option value="EUR"${(b.currency||'EUR')==='EUR'?' selected':''}>€ EUR</option>
+              <option value="USD"${(b.currency||'EUR')==='USD'?' selected':''}>$ USD</option>
             </select>
           </div>
         </div>
@@ -3989,7 +4027,7 @@ function render(){
       // ── Mode Écrans : sous-catégories + prix par acheteur (sg/bb/fnc/ty) ───
       const ecranItems=S.ref.filter(r=>r.cat==='Écrans');
       const BUYER_COLS=[
-        {id:'sg',label:'Smartgrade',cur:'€',color:'#16a34a',grades:['A','B','C','D']},
+        {id:'sg',label:'Smartgrade',cur:'$',color:'#16a34a',grades:['A','B','C','D']},
         {id:'bb',label:'BuybackLCD',cur:'€',color:'#0369a1',grades:['A','B','C','D']},
         {id:'fnc',label:'Fix N Cover',cur:'€',color:'#7c3aed',grades:['B','C','D']},
         {id:'ty',label:'TOPYET',cur:'$',color:'#b45309',grades:['A','B','C','D']},
@@ -4189,20 +4227,23 @@ function render(){
 function addBuyerOffer(lotIdx){
   const sel=document.getElementById('ofr_sel_'+lotIdx);
   const newInp=document.getElementById('ofr_new_'+lotIdx);
-  let id,name;
+  const curSel=document.getElementById('ofr_cur_'+lotIdx);
+  let id,name,currency;
   if(!sel)return;
   if(sel.value==='__new__'){
     name=(newInp?.value||'').trim();
     if(!name)return;
     id='buyer_'+Math.random().toString(36).slice(2,7);
-    S.buyers.push({id,name,territory:'fr'});
+    currency=curSel?.value||'EUR';
+    S.buyers.push({id,name,territory:'fr',currency});
   } else if(sel.value){
     id=sel.value;
     name=S.buyers.find(b=>b.id===id)?.name||id;
+    currency=curSel?.value||S.buyers.find(b=>b.id===id)?.currency||'EUR';
   } else return;
   if(!S.lots[lotIdx].buyerOffers)S.lots[lotIdx].buyerOffers=[];
   if(S.lots[lotIdx].buyerOffers.find(o=>o.id===id))return;
-  S.lots[lotIdx].buyerOffers.push({id,name,prices:{}});
+  S.lots[lotIdx].buyerOffers.push({id,name,prices:{},currency});
   save();render();
 }
 function removeBuyerOffer(lotIdx,bi){
@@ -4299,8 +4340,8 @@ async function refreshRates(){
   try{
     // EUR→ILS et USD→ILS en deux appels parallèles
     const [resEur,resUsd]=await Promise.all([
-      fetch('https://api.frankfurter.app/latest?from=EUR&to=ILS'),
-      fetch('https://api.frankfurter.app/latest?from=USD&to=ILS')
+      fetch('https://api.frankfurter.dev/v1/latest?from=EUR&to=ILS'),
+      fetch('https://api.frankfurter.dev/v1/latest?from=USD&to=ILS')
     ]);
     const [dataEur,dataUsd]=await Promise.all([resEur.json(),resUsd.json()]);
     const newEur=dataEur?.rates?.ILS;

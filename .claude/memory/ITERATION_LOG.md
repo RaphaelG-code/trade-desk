@@ -60,3 +60,25 @@
   - LRN-007 : `lot` vs `c.lot` dans render() → réglé par `const lot = c.lot`
   - LRN-008 : mismatch clés avec/sans capacité → réglé par `normM()` + `lookupPrice()`
 - **Prochaine étape** : Valider l'affichage Atelva complet → puis Passe 2 (dashboard : calcul bid basé sur offres).
+
+---
+
+## 2026-06-10 — Sprint 4 : Multi-devise + UX Offres Reçues + Smartgrade HK
+
+- **Objectif** : Multi-devise USD/EUR dans les offres acheteurs, injection offre Smartgrade HK, amélioration UX tableau offres.
+- **Réalisé** :
+  - Multi-devise dans la section Offres Reçues : header affiche €/$ par acheteur, colonne "Meilleur" affiche la bonne devise, totaux par acheteur respectent la devise
+  - Correction Smartgrade : devise EUR → USD (Smartgrade opère en USD)
+  - Sélecteur devise (EUR/USD) lors de l'ajout d'un acheteur dans Offres Reçues
+  - Auto-propagation de la devise lors de la sélection d'un acheteur existant (dropdown)
+  - Injection offre Smartgrade HK dans LOT-2026-003 (80+ prix C+/C pour iPhones et Samsung)
+  - Tableau offres : ligne "Ajouter acheteur" déplacée en haut de section
+  - Tableau offres : collapsible — 5 premières lignes visibles, expand/collapse pour le reste
+  - Tableau offres : header sticky (top) + totaux sticky (bottom)
+  - Buy price thresholds (Ideal/Max/Extreme) : affichage en $ (USD) au lieu de €
+  - Correction `sgIls` : Smartgrade calculé en `sg * S.rUsd` (était `rEur`)
+  - Migration initiale : `S.buyers` et `lot.buyerOffers` reçoivent devise par défaut si absente
+- **Décisions prises** :
+  - Devise stockée par acheteur (dans `buyer`) ET par offre (dans `buyerOffer`)
+  - Seuils d'achat affichés en USD (aligné usage réel)
+- **Prochaine étape** : Sprint 5 — Calcul bid automatique depuis les offres reçues (Passe 2).
